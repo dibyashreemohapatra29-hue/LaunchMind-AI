@@ -1,0 +1,230 @@
+# LaunchMind AI - MVP Development
+
+## Objective
+
+Persist every completed AI analysis inside Supabase and replace the placeholder History page with a fully functional Analysis History experience.
+
+This feature should allow Product Managers to revisit previous analyses without running Gemini again.
+
+Do not modify the existing Gemini analysis workflow.
+
+---
+
+# Rules
+
+- Preserve the existing architecture.
+- Do NOT modify Gemini prompts.
+- Do NOT redesign the dashboard.
+- Do NOT install unnecessary dependencies.
+- Use the existing Supabase client.
+- Use reusable React + TypeScript components.
+- Maintain the current UI design.
+
+---
+
+# User Flow
+
+Dashboard
+
+↓
+
+New Analysis
+
+↓
+
+Analyze PRD
+
+↓
+
+Gemini Analysis completes
+
+↓
+
+Save Analysis in Supabase
+
+↓
+
+Navigate to Results page
+
+↓
+
+History page displays saved analyses
+
+↓
+
+User opens previous analysis
+
+↓
+
+Display stored report without calling Gemini
+
+---
+
+# Database
+
+Use the existing Supabase project.
+
+Create a table named:
+
+analysis_history
+
+Columns:
+
+- id (UUID Primary Key)
+- created_at (Timestamp)
+- product_name
+- product_type
+- prd_text
+- readiness_score
+- executive_summary
+- recommendation
+- confidence_score
+- risk_assessment (JSON)
+- missing_requirements (JSON)
+- ai_recommendations (JSON)
+
+---
+
+# Save Analysis
+
+After every successful Gemini response:
+
+Automatically save:
+
+- Product Name
+- Product Type
+- PRD
+- Complete Gemini response
+- Timestamp
+
+Display a success toast after saving.
+
+---
+
+# History Page
+
+Replace the placeholder page.
+
+Display analyses as responsive cards.
+
+Each card should display:
+
+- Product Name
+- Product Type
+- Analysis Date
+- Readiness Score
+- Recommendation Badge
+
+Recommendation badges:
+
+- GO
+- GO WITH RISKS
+- NO-GO
+
+Newest analyses should appear first.
+
+---
+
+# Search
+
+Add a search bar.
+
+Allow searching by:
+
+- Product Name
+
+Update results dynamically.
+
+---
+
+# History Details
+
+Selecting an analysis should:
+
+Open the complete stored report.
+
+Reuse the existing Analysis Results page.
+
+Do NOT call Gemini again.
+
+Load the saved data from Supabase.
+
+---
+
+# Empty State
+
+If no analyses exist display:
+
+"No analyses yet."
+
+Display a button:
+
+Create First Analysis
+
+Navigate to the New Analysis page.
+
+---
+
+# Loading State
+
+Display skeleton loaders while fetching history.
+
+---
+
+# Error State
+
+If Supabase cannot load history:
+
+Display a friendly error message.
+
+Include:
+
+Retry button
+
+Return to Dashboard button
+
+Do not implement retry logic.
+
+---
+
+# Component Structure
+
+Create reusable components.
+
+Suggested:
+
+- HistoryCard
+- HistoryList
+- HistorySearch
+- HistoryDetails
+- EmptyHistoryState
+
+---
+
+# Future Integration Placeholders
+
+Leave placeholder comments for:
+
+- User Authentication
+- Team Workspace
+- Report Sharing
+- PDF Export
+- Slack Notifications
+
+Do not implement them.
+
+---
+
+# Deliverables
+
+After implementation provide:
+
+1. Files created
+
+2. Files modified
+
+3. Components created
+
+4. Future integration points
+
+Implement only this feature.

@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { AnalysisResult } from "../lib/api";
 import { AnalysisConfig } from "../components/new-analysis/AnalysisOptions";
-import { mapToResultsViewData } from "../lib/resultsMapper";
+import { mapToResultsViewData, ResultsViewData } from "../lib/resultsMapper";
 import { Icons } from "../components/icons";
 import { ScoreCard } from "../components/results/ScoreCard";
 import { ExecutiveSummary } from "../components/results/ExecutiveSummary";
@@ -20,14 +20,28 @@ interface ResultsProps {
   error: string | null;
   selectedOptions: AnalysisConfig | null;
   setCurrentView: (view: string) => void;
+  viewDataOverride?: ResultsViewData | null;
+  backTarget?: "new-analysis" | "history";
+  historyMeta?: { productName: string; createdAt: string } | null;
 }
 
-export function Results({ result, isLoading, error, selectedOptions, setCurrentView }: ResultsProps) {
-  const viewData = useMemo(
+export function Results({
+  result,
+  isLoading,
+  error,
+  selectedOptions,
+  setCurrentView,
+  viewDataOverride = null,
+  backTarget = "new-analysis",
+  historyMeta = null,
+}: ResultsProps) {
+  const computedViewData = useMemo(
     () => (result ? mapToResultsViewData(result, selectedOptions) : null),
     [result, selectedOptions]
   );
+  const viewData = viewDataOverride ?? computedViewData;
 
+  const goBack = () => setCurrentView(backTarget);
   const goToNewAnalysis = () => setCurrentView("new-analysis");
   const goToDashboard = () => setCurrentView("dashboard");
 
@@ -35,17 +49,19 @@ export function Results({ result, isLoading, error, selectedOptions, setCurrentV
     <div className="animate-in fade-in duration-500 pb-12 space-y-8">
       <div>
         <button
-          onClick={goToNewAnalysis}
+          onClick={goBack}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
         >
           <Icons.externalLink className="w-4 h-4 rotate-180" />
-          Back
+          {backTarget === "history" ? "Back to History" : "Back"}
         </button>
         <h2 className="text-2xl font-bold tracking-tight mb-2 text-foreground">
           AI Analysis Results
         </h2>
         <p className="text-muted-foreground">
-          Review AI-generated launch insights before making a release decision.
+          {historyMeta
+            ? `Viewing saved analysis for ${historyMeta.productName} — ${new Date(historyMeta.createdAt).toLocaleDateString()}`
+            : "Review AI-generated launch insights before making a release decision."}
         </p>
       </div>
 

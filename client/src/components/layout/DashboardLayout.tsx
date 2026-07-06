@@ -6,8 +6,12 @@ import { Integrations } from "../../pages/Integrations";
 import { PlaceholderPage } from "../../pages/PlaceholderPage";
 import { NewAnalysis } from "../../pages/NewAnalysis";
 import { Results } from "../../pages/Results";
+import { History } from "../../pages/History";
+import { Toast } from "../ui/Toast";
 import { analyzePrd, AnalysisResult, AnalyzePrdRequest } from "../../lib/api";
 import { AnalysisConfig } from "../../components/new-analysis/AnalysisOptions";
+import { mapToResultsViewData, ResultsViewData } from "../../lib/resultsMapper";
+import { saveAnalysisToHistory, fetchAnalysisById } from "../../lib/historyApi";
 
 export function DashboardLayout() {
   const [currentView, setCurrentView] = useState("dashboard");
@@ -15,19 +19,57 @@ export function DashboardLayout() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<AnalysisConfig | null>(null);
+  const [historyViewData, setHistoryViewData] = useState<ResultsViewData | null>(null);
+  const [historyMeta, setHistoryMeta] = useState<{ productName: string; createdAt: string } | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const runAnalysis = async (payload: AnalyzePrdRequest) => {
     setSelectedOptions(payload.options);
     setAnalysisResult(null);
     setAnalysisError(null);
+    setHistoryViewData(null);
+    setHistoryMeta(null);
     setIsAnalyzing(true);
     setCurrentView("results");
 
     try {
       const result = await analyzePrd(payload);
       setAnalysisResult(result);
+
+      const viewData = mapToResultsViewData(result, payload.options);
+      try {
+        await saveAnalysisToHistory({
+          productName: payload.productName,
+          productType: payload.productType,
+          prdText: payload.prdText,
+          viewData,
+        });
+        setToastMessage("Analysis saved to history");
+      } catch (saveErr) {
+        console.error("Failed to save analysis to history:", saveErr);
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to analyze PRD. Please try again.";
+      setAnalysisError(message);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const openHistoryEntry = async (id: string) => {
+    setHistoryViewData(null);
+    setHistoryMeta(null);
+    setAnalysisResult(null);
+    setAnalysisError(null);
+    setIsAnalyzing(true);
+    setCurrentView("results");
+
+    try {
+      const detail = await fetchAnalysisById(id);
+      setHistoryViewData(detail.viewData);
+      setHistoryMeta({ productName: detail.productName, createdAt: detail.createdAt });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to load this analysis. Please try again.";
       setAnalysisError(message);
     } finally {
       setIsAnalyzing(false);
@@ -50,10 +92,13 @@ export function DashboardLayout() {
             error={analysisError}
             selectedOptions={selectedOptions}
             setCurrentView={setCurrentView}
+            viewDataOverride={historyViewData}
+            backTarget={historyViewData ? "history" : "new-analysis"}
+            historyMeta={historyMeta}
           />
         );
       case "history":
-        return <PlaceholderPage title="Analysis History" description="View past PRD analyses and launch decisions." />;
+        return <History setCurrentView={setCurrentView} onSelectAnalysis={openHistoryEntry} />;
       case "settings":
         return <PlaceholderPage title="Settings" description="Manage your LaunchMind AI preferences and workspace settings." />;
       default:
@@ -72,6 +117,10 @@ export function DashboardLayout() {
           </div>
         </main>
       </div>
+      {toastMessage && <Toast message={toastMessage} onDismiss={() => setToastMessage(null)} />}
     </div>
   );
 }
+
+// TODO: User Authentication — gate saved/viewed history to the signed-in user.
+
