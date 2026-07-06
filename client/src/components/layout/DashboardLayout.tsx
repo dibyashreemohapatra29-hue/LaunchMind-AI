@@ -6,11 +6,33 @@ import { Integrations } from "../../pages/Integrations";
 import { PlaceholderPage } from "../../pages/PlaceholderPage";
 import { NewAnalysis } from "../../pages/NewAnalysis";
 import { Results } from "../../pages/Results";
-import { AnalysisResult } from "../../lib/api";
+import { analyzePrd, AnalysisResult, AnalyzePrdRequest } from "../../lib/api";
+import { AnalysisConfig } from "../../components/new-analysis/AnalysisOptions";
 
 export function DashboardLayout() {
   const [currentView, setCurrentView] = useState("dashboard");
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<AnalysisConfig | null>(null);
+
+  const runAnalysis = async (payload: AnalyzePrdRequest) => {
+    setSelectedOptions(payload.options);
+    setAnalysisResult(null);
+    setAnalysisError(null);
+    setIsAnalyzing(true);
+    setCurrentView("results");
+
+    try {
+      const result = await analyzePrd(payload);
+      setAnalysisResult(result);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to analyze PRD. Please try again.";
+      setAnalysisError(message);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const renderContent = () => {
     switch (currentView) {
@@ -19,9 +41,17 @@ export function DashboardLayout() {
       case "integrations":
         return <Integrations />;
       case "new-analysis":
-        return <NewAnalysis setCurrentView={setCurrentView} onAnalysisComplete={setAnalysisResult} />;
+        return <NewAnalysis setCurrentView={setCurrentView} onAnalyze={runAnalysis} />;
       case "results":
-        return <Results result={analysisResult} setCurrentView={setCurrentView} />;
+        return (
+          <Results
+            result={analysisResult}
+            isLoading={isAnalyzing}
+            error={analysisError}
+            selectedOptions={selectedOptions}
+            setCurrentView={setCurrentView}
+          />
+        );
       case "history":
         return <PlaceholderPage title="Analysis History" description="View past PRD analyses and launch decisions." />;
       case "settings":

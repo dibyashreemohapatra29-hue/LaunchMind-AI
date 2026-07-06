@@ -3,16 +3,16 @@ import { ProductInformationForm, ProductInfo } from "../components/new-analysis/
 import { PRDUploadArea } from "../components/new-analysis/PRDUploadArea";
 import { PRDTextEditor } from "../components/new-analysis/PRDTextEditor";
 import { AnalysisOptions, AnalysisConfig } from "../components/new-analysis/AnalysisOptions";
-import { analyzePrd, AnalysisResult } from "../lib/api";
+import { AnalyzePrdRequest } from "../lib/api";
 
 const READABLE_TEXT_EXTENSIONS = [".txt", ".md"];
 
 interface NewAnalysisProps {
   setCurrentView: (view: string) => void;
-  onAnalysisComplete: (result: AnalysisResult) => void;
+  onAnalyze: (payload: AnalyzePrdRequest) => void;
 }
 
-export function NewAnalysis({ setCurrentView, onAnalysisComplete }: NewAnalysisProps) {
+export function NewAnalysis({ setCurrentView, onAnalyze }: NewAnalysisProps) {
   const [productInfo, setProductInfo] = useState<ProductInfo>({ name: "", type: "" });
   const [file, setFile] = useState<File | null>(null);
   const [pastedText, setPastedText] = useState("");
@@ -24,7 +24,7 @@ export function NewAnalysis({ setCurrentView, onAnalysisComplete }: NewAnalysisP
     goNoGoRecommendation: true,
   });
   const [touched, setTouched] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isPreparing, setIsPreparing] = useState(false);
   const [analyzeError, setAnalyzeError] = useState<string | null>(null);
 
   const hasName = productInfo.name.trim().length > 0;
@@ -55,28 +55,27 @@ export function NewAnalysis({ setCurrentView, onAnalysisComplete }: NewAnalysisP
 
   const handleAnalyze = async () => {
     setTouched(true);
-    if (!isValid || isAnalyzing) return;
+    if (!isValid || isPreparing) return;
 
     setAnalyzeError(null);
-    setIsAnalyzing(true);
+    setIsPreparing(true);
 
     try {
       const prdText = await extractPrdText();
 
-      const result = await analyzePrd({
+      onAnalyze({
         productName: productInfo.name,
         productType: productInfo.type,
         prdText,
         options,
       });
 
-      onAnalysisComplete(result);
       setCurrentView("results");
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to analyze PRD. Please try again.";
+      const message = err instanceof Error ? err.message : "Failed to read PRD content. Please try again.";
       setAnalyzeError(message);
     } finally {
-      setIsAnalyzing(false);
+      setIsPreparing(false);
     }
   };
 
@@ -146,20 +145,20 @@ export function NewAnalysis({ setCurrentView, onAnalysisComplete }: NewAnalysisP
           )}
           <button
             onClick={handleAnalyze}
-            disabled={(!isValid && touched) || isAnalyzing}
+            disabled={(!isValid && touched) || isPreparing}
             className={`px-8 py-3 rounded-md text-sm font-medium transition-all shadow-sm inline-flex items-center gap-2 ${
-              isValid && !isAnalyzing
+              isValid && !isPreparing
                 ? "bg-primary text-primary-foreground hover:bg-primary/90"
                 : "bg-muted text-muted-foreground cursor-not-allowed"
             }`}
           >
-            {isAnalyzing && (
+            {isPreparing && (
               <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
               </svg>
             )}
-            {isAnalyzing ? "Analyzing PRD..." : "Analyze PRD"}
+            {isPreparing ? "Preparing PRD..." : "Analyze PRD"}
           </button>
         </div>
       </div>

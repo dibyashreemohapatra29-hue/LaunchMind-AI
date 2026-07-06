@@ -1,0 +1,277 @@
+# LaunchMind AI - MVP Development
+
+## Objective
+
+Build the AI Analysis Results page.
+
+This page should display the structured response returned by the Gemini API.
+
+Do not connect Supabase.
+
+Do not save analysis history.
+
+Assume the API already returns valid JSON.
+
+---
+
+# Rules
+
+- Preserve the existing architecture.
+- Do NOT modify backend files.
+- Do NOT modify Gemini service.
+- Do NOT install new dependencies.
+- Use reusable React + TypeScript components.
+- Follow the existing dashboard design.
+
+---
+
+# User Flow
+
+Dashboard
+
+↓
+
+New Analysis
+
+↓
+
+Analyze PRD
+
+↓
+
+AI Analysis completes
+
+↓
+
+Navigate to Results page
+
+↓
+
+Display analysis results
+
+---
+
+# Results Page Layout
+
+Create a responsive enterprise dashboard.
+
+Display the following sections.
+
+---
+
+## Page Header
+
+Title
+
+AI Analysis Results
+
+Subtitle
+
+Review AI-generated launch insights before making a release decision.
+
+Include a Back button.
+
+---
+
+## Launch Readiness Score
+
+Create a large score card.
+
+Display:
+
+- Overall Score (0-100)
+- Progress bar
+- Risk Level
+
+Risk Level values:
+
+- Low
+- Medium
+- High
+
+Use mock API data.
+
+---
+
+## Executive Summary
+
+Display a card containing:
+
+- AI-generated summary
+- Key observations
+
+Allow multiline content.
+
+---
+
+## Go / No-Go Recommendation
+
+Create a highlighted recommendation card.
+
+Possible values:
+
+- GO
+- GO WITH RISKS
+- NO-GO
+
+Display:
+
+Recommendation
+
+Confidence %
+
+Short explanation
+
+Use different badge colors.
+
+---
+
+## Risks
+
+Create a table.
+
+Columns:
+
+- Risk
+- Severity
+- Impact
+- Suggested Action
+
+Support:
+
+- High
+- Medium
+- Low
+
+Display at least five sample rows.
+
+---
+
+## Missing Requirements
+
+Display a checklist.
+
+Each missing requirement should include:
+
+- Title
+- Description
+- Priority
+
+Priority:
+
+- Critical
+- High
+- Medium
+- Low
+
+---
+
+## AI Recommendations
+
+Display numbered recommendations.
+
+Each recommendation should appear inside its own card.
+
+---
+
+## Selected Analysis Options
+
+Display the options selected on the previous page.
+
+Examples:
+
+- Risk Assessment
+
+- Executive Summary
+
+- Launch Readiness
+
+- Missing Requirements
+
+- Go / No-Go Recommendation
+
+---
+
+## Action Buttons
+
+Display:
+
+Download Report
+
+Run New Analysis
+
+Return to Dashboard
+
+Buttons should exist only as placeholders.
+
+No functionality yet.
+
+---
+
+# Loading State
+
+If results are loading:
+
+Display skeleton loaders.
+
+---
+
+# Error State
+
+If analysis fails:
+
+Display a friendly error card.
+
+Include:
+
+Retry Analysis button
+
+Return to Dashboard button
+
+Do not implement retry logic.
+
+---
+
+# Component Structure
+
+Create reusable components.
+
+Suggested:
+
+- ScoreCard
+- ExecutiveSummary
+- RecommendationCard
+- RisksTable
+- MissingRequirements
+- AIRecommendations
+- ResultsActions
+
+---
+
+# Future Integration Placeholders
+
+Leave placeholder comments for:
+
+- PDF Export
+- Supabase Storage
+- Slack Sharing
+- Google Drive Export
+- Calendar Event Creation
+
+Do not implement them.
+
+---
+
+# Deliverables
+
+After implementation provide:
+
+1. Files created
+
+2. Files modified
+
+3. Components created
+
+4. Future integration points
+
+Implement only this feature.
