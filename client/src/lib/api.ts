@@ -1,0 +1,42 @@
+export interface AnalysisOptions {
+  riskAssessment: boolean;
+  launchReadinessScore: boolean;
+  missingRequirements: boolean;
+  executiveSummary: boolean;
+  goNoGoRecommendation: boolean;
+}
+
+export interface AnalyzePrdRequest {
+  productName: string;
+  productType: string;
+  prdText: string;
+  options: AnalysisOptions;
+}
+
+export interface AnalysisResult {
+  executiveSummary?: string;
+  launchReadinessScore?: number;
+  risks?: { title: string; severity: "low" | "medium" | "high"; description: string }[];
+  missingRequirements?: string[];
+  goNoGoRecommendation?: {
+    decision: "go" | "no-go" | "conditional";
+    rationale: string;
+  };
+}
+
+export async function analyzePrd(payload: AnalyzePrdRequest): Promise<AnalysisResult> {
+  const response = await fetch("/api/analyze", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    const message = data?.error || "Failed to analyze PRD. Please try again.";
+    throw new Error(message);
+  }
+
+  return data.result as AnalysisResult;
+}

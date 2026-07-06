@@ -1,0 +1,1 @@
+- [No-router view switching in LaunchMind-AI](launchmind-view-switching.md) — client has no react-router; "navigate" means setting DashboardLayout's currentView state.

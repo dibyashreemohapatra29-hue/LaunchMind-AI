@@ -5,9 +5,12 @@ import { Dashboard } from "../../pages/Dashboard";
 import { Integrations } from "../../pages/Integrations";
 import { PlaceholderPage } from "../../pages/PlaceholderPage";
 import { NewAnalysis } from "../../pages/NewAnalysis";
+import { Results } from "../../pages/Results";
+import { AnalysisResult } from "../../lib/api";
 
 export function DashboardLayout() {
   const [currentView, setCurrentView] = useState("dashboard");
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
 
   const renderContent = () => {
     switch (currentView) {
@@ -16,7 +19,9 @@ export function DashboardLayout() {
       case "integrations":
         return <Integrations />;
       case "new-analysis":
-        return <NewAnalysis />;
+        return <NewAnalysis setCurrentView={setCurrentView} onAnalysisComplete={setAnalysisResult} />;
+      case "results":
+        return <Results result={analysisResult} setCurrentView={setCurrentView} />;
       case "history":
         return <PlaceholderPage title="Analysis History" description="View past PRD analyses and launch decisions." />;
       case "settings":

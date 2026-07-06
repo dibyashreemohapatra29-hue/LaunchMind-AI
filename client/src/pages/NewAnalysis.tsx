@@ -1,10 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ProductInformationForm, ProductInfo } from "../components/new-analysis/ProductInformationForm";
 import { PRDUploadArea } from "../components/new-analysis/PRDUploadArea";
 import { PRDTextEditor } from "../components/new-analysis/PRDTextEditor";
 import { AnalysisOptions, AnalysisConfig } from "../components/new-analysis/AnalysisOptions";
+import { analyzePrd, AnalysisResult } from "../lib/api";
 
-export function NewAnalysis() {
+const READABLE_TEXT_EXTENSIONS = [".txt", ".md"];
+
+interface NewAnalysisProps {
+  setCurrentView: (view: string) => void;
+  onAnalysisComplete: (result: AnalysisResult) => void;
+}
+
+export function NewAnalysis({ setCurrentView, onAnalysisComplete }: NewAnalysisProps) {
   const [productInfo, setProductInfo] = useState<ProductInfo>({ name: "", type: "" });
   const [file, setFile] = useState<File | null>(null);
   const [pastedText, setPastedText] = useState("");
@@ -15,8 +23,9 @@ export function NewAnalysis() {
     executiveSummary: true,
     goNoGoRecommendation: true,
   });
-  const [showToast, setShowToast] = useState(false);
   const [touched, setTouched] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analyzeError, setAnalyzeError] = useState<string | null>(null);
 
   const hasName = productInfo.name.trim().length > 0;
   const hasType = productInfo.type !== "";
@@ -24,23 +33,52 @@ export function NewAnalysis() {
   
   const isValid = hasName && hasType && hasPRD;
 
-  const handleAnalyze = () => {
-    setTouched(true);
-    if (!isValid) return;
+  const extractPrdText = async (): Promise<string> => {
+    if (pastedText.trim().length > 0) {
+      return pastedText;
+    }
 
-    // TODO: Gemini Analysis API Integration
-    // TODO: Prompt Engine Integration
-    // TODO: Analysis History logging
+    if (file) {
+      const isReadableAsText = READABLE_TEXT_EXTENSIONS.some((ext) =>
+        file.name.toLowerCase().endsWith(ext)
+      );
+      if (!isReadableAsText) {
+        throw new Error(
+          "Only .txt and .md files can be read directly right now. Please paste the PRD text instead, or upload a .txt/.md file."
+        );
+      }
+      return file.text();
+    }
 
-    setShowToast(true);
+    throw new Error("No PRD content provided.");
   };
 
-  useEffect(() => {
-    if (showToast) {
-      const timer = setTimeout(() => setShowToast(false), 5000);
-      return () => clearTimeout(timer);
+  const handleAnalyze = async () => {
+    setTouched(true);
+    if (!isValid || isAnalyzing) return;
+
+    setAnalyzeError(null);
+    setIsAnalyzing(true);
+
+    try {
+      const prdText = await extractPrdText();
+
+      const result = await analyzePrd({
+        productName: productInfo.name,
+        productType: productInfo.type,
+        prdText,
+        options,
+      });
+
+      onAnalysisComplete(result);
+      setCurrentView("results");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to analyze PRD. Please try again.";
+      setAnalyzeError(message);
+    } finally {
+      setIsAnalyzing(false);
     }
-  }, [showToast]);
+  };
 
   return (
     <div className="animate-in fade-in duration-500 pb-12 relative">
@@ -102,41 +140,29 @@ export function NewAnalysis() {
         </section>
 
         {/* Section 6 */}
-        <div className="flex justify-end pt-4">
+        <div className="flex flex-col items-end gap-3 pt-4">
+          {analyzeError && (
+            <p className="text-sm text-destructive text-right max-w-md">{analyzeError}</p>
+          )}
           <button
             onClick={handleAnalyze}
-            disabled={!isValid && touched}
-            className={`px-8 py-3 rounded-md text-sm font-medium transition-all shadow-sm ${
-              isValid
+            disabled={(!isValid && touched) || isAnalyzing}
+            className={`px-8 py-3 rounded-md text-sm font-medium transition-all shadow-sm inline-flex items-center gap-2 ${
+              isValid && !isAnalyzing
                 ? "bg-primary text-primary-foreground hover:bg-primary/90"
                 : "bg-muted text-muted-foreground cursor-not-allowed"
             }`}
           >
-            Analyze PRD
+            {isAnalyzing && (
+              <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+            )}
+            {isAnalyzing ? "Analyzing PRD..." : "Analyze PRD"}
           </button>
         </div>
       </div>
-
-      {/* Toast Notification */}
-      {showToast && (
-        <div className="fixed bottom-6 right-6 bg-card border border-border shadow-lg rounded-lg p-4 flex items-start gap-3 animate-in slide-in-from-bottom-5 duration-300 max-w-sm z-50">
-          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <div>
-            <h4 className="text-sm font-medium text-foreground mb-1">Analysis Initiated</h4>
-            <p className="text-sm text-muted-foreground leading-snug">
-              AI Analysis will be connected in the next development phase.
-            </p>
-          </div>
-          <button 
-            onClick={() => setShowToast(false)}
-            className="ml-auto text-muted-foreground hover:text-foreground"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-          </button>
-        </div>
-      )}
     </div>
   );
 }
