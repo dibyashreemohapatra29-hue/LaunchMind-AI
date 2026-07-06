@@ -1,0 +1,168 @@
+# LaunchMind AI - Phase 3
+## Feature 1: Dashboard UI & Navigation
+
+### Objective
+
+Build the frontend dashboard for LaunchMind AI without changing the existing project architecture.
+
+This project uses:
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+
+Follow existing project conventions.
+
+---
+
+# Important Rules
+
+- Do NOT modify backend files.
+- Do NOT modify Supabase integration.
+- Do NOT add new dependencies unless absolutely necessary.
+- Do NOT implement API calls.
+- Do NOT implement business logic.
+- Use mock data only.
+- Keep components reusable.
+- Follow enterprise SaaS design principles.
+- Keep the implementation production-ready.
+
+---
+
+# Dashboard Layout
+
+Create a responsive application layout consisting of:
+
+## Left Sidebar
+
+Include navigation items:
+
+- Dashboard
+- New Analysis
+- History
+- Integrations
+- Settings
+
+The active page should be Dashboard.
+
+---
+
+## Top Navigation
+
+Include:
+
+- LaunchMind AI logo/title
+- User avatar placeholder
+
+---
+
+## Main Dashboard
+
+### Hero Section
+
+Title:
+
+> AI Product Operations Command Center
+
+Subtitle:
+
+> Make evidence-based Go / No-Go launch decisions.
+
+---
+
+### Quick Actions
+
+Create three action cards/buttons:
+
+- New Analysis
+- Upload PRD
+- View History
+
+No functionality required yet.
+
+---
+
+### KPI Cards
+
+Display four dashboard cards with mock values.
+
+Cards:
+
+- Analyses Completed
+- Launch Readiness Score
+- High Risk Findings
+- Connected Integrations
+
+Use realistic dummy values.
+
+---
+
+### Recent Analyses
+
+Create a table with mock data.
+
+Columns:
+
+- PRD Name
+- Status
+- Risk Score
+- Recommendation
+- Date
+
+Use at least five dummy records.
+
+---
+
+### Recent Activity
+
+Create a timeline panel showing recent product activities using mock data.
+
+Examples:
+
+- PRD uploaded
+- Analysis completed
+- Slack notification sent
+- Calendar updated
+
+---
+
+# UI Requirements
+
+Use a clean enterprise SaaS style.
+
+Requirements:
+
+- Responsive
+- Rounded cards
+- Soft shadows
+- Consistent spacing
+- Professional typography
+- Modern layout
+- Clean color palette
+- Accessible design
+
+---
+
+# Component Structure
+
+Create reusable React components wherever appropriate.
+
+Organize the code cleanly.
+
+Do not over-engineer.
+
+---
+
+# Output
+
+After implementation, explain:
+
+1. Components created
+2. Folder structure
+3. Future integration points
+4. Where API calls should be added later
+
+Do not modify backend files.
+
+Return only the implementation required for this feature.

@@ -1,0 +1,210 @@
+# LaunchMind AI - MVP Development
+
+## Objective
+
+Build the complete frontend dashboard for LaunchMind AI.
+
+Do not modify the existing architecture.
+
+This project already uses:
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+
+Reuse the existing project structure.
+
+---
+
+# Rules
+
+- Do NOT modify backend files.
+- Do NOT modify Supabase.
+- Do NOT modify Gemini integration.
+- Do NOT install unnecessary packages.
+- Use reusable components.
+- Use mock data only.
+- No business logic.
+- No API calls.
+- No authentication.
+
+---
+
+# Build the Application Layout
+
+Create a professional enterprise SaaS dashboard.
+
+The application should contain:
+
+## 1. Left Sidebar
+
+Include navigation links:
+
+- Dashboard
+- New Analysis
+- History
+- Integrations
+- Settings
+
+The Dashboard page should appear active.
+
+---
+
+## 2. Top Navigation
+
+Include:
+
+- LaunchMind AI logo/title
+- User avatar placeholder
+
+---
+
+## 3. Main Dashboard
+
+### Hero Section
+
+Title
+
+AI Product Operations Command Center
+
+Subtitle
+
+Make evidence-based Go / No-Go launch decisions.
+
+Include a primary CTA button:
+
+New Analysis
+
+---
+
+### Quick Actions
+
+Create three action cards.
+
+- New Analysis
+- Upload PRD
+- View History
+
+No functionality yet.
+
+---
+
+### KPI Section
+
+Create four KPI cards.
+
+Cards:
+
+- Analyses Completed
+- Launch Readiness Score
+- High Risk Findings
+- Connected Integrations
+
+Use realistic dummy values.
+
+---
+
+### Recent Analyses
+
+Create a responsive table.
+
+Columns:
+
+- PRD Name
+- Product
+- Status
+- Risk Score
+- Recommendation
+- Date
+
+Populate with at least five realistic sample rows.
+
+Recommendations should include:
+
+- Go
+- Go with Risks
+- No-Go
+
+Status examples:
+
+- Completed
+- Running
+- Pending
+
+---
+
+### Recent Activity
+
+Create a timeline showing activities such as:
+
+- PRD uploaded
+- Analysis completed
+- Slack notification sent
+- Calendar event created
+- Report exported
+
+Use realistic timestamps.
+
+---
+
+# UI Requirements
+
+Create a modern enterprise AI application.
+
+Use:
+
+- Responsive layout
+- Rounded cards
+- Soft shadows
+- Consistent spacing
+- Professional typography
+- Neutral color palette
+- Accessible components
+
+The interface should resemble enterprise products such as Linear, Notion, Vercel or GitHub rather than a marketing website.
+
+---
+
+# Component Structure
+
+Refactor into reusable components.
+
+Suggested structure:
+
+components/
+layout/
+pages/
+
+Keep components modular and easy to extend.
+
+---
+
+# Future Ready
+
+Leave obvious placeholders where future functionality will be connected.
+
+Examples:
+
+- Gemini API
+- Supabase
+- Slack
+- Google Drive
+- Google Calendar
+
+Do NOT implement those integrations.
+
+---
+
+# Deliverables
+
+After implementation provide:
+
+1. Folder structure
+2. Components created
+3. Files modified
+4. Future integration points
+
+Do not modify backend files.
+
+Return only the implementation for this feature.
