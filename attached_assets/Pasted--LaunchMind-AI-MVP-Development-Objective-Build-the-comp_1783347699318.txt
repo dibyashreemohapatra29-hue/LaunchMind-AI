@@ -1,0 +1,262 @@
+# LaunchMind AI - MVP Development
+
+## Objective
+
+Build the complete **New Analysis** workflow.
+
+This is the primary workflow of LaunchMind AI.
+
+The user journey should become:
+
+Dashboard → New Analysis → Upload or Paste PRD → Configure Analysis → Analyze PRD
+
+Only build the frontend.
+
+Do not implement AI analysis yet.
+
+---
+
+# Rules
+
+- Do NOT modify backend files.
+- Do NOT modify Supabase.
+- Do NOT connect Gemini.
+- Do NOT add authentication.
+- Do NOT install unnecessary packages.
+- Do NOT remove existing dashboard functionality.
+- Keep the current layout and navigation intact.
+- Use reusable React + TypeScript components.
+
+---
+
+# Navigation
+
+Clicking **New Analysis** from the sidebar should navigate to a dedicated page.
+
+The Dashboard should remain unchanged.
+
+---
+
+# Page Header
+
+Display:
+
+Title
+
+New Product Analysis
+
+Subtitle
+
+Upload or paste your Product Requirements Document (PRD) to begin AI-powered launch analysis.
+
+---
+
+# Analysis Form
+
+Create a clean enterprise form.
+
+---
+
+## Section 1 - Product Information
+
+### Product Name
+
+Text input
+
+Required
+
+Placeholder
+
+Example:
+
+LaunchMind AI v2
+
+---
+
+### Product Type
+
+Dropdown
+
+Options
+
+- SaaS
+- AI Product
+- Mobile App
+- Web Application
+- Marketplace
+- Internal Tool
+- API
+- Other
+
+Required
+
+---
+
+## Section 2 - PRD Upload
+
+Create a drag-and-drop upload area.
+
+Allow only:
+
+- PDF
+- DOCX
+- TXT
+- MD
+
+Maximum size
+
+10 MB
+
+After upload display:
+
+- File name
+- File size
+- Remove file button
+
+Do not parse the document.
+
+Do not call any API.
+
+---
+
+## Section 3 - Divider
+
+Display a centered divider:
+
+OR
+
+---
+
+## Section 4 - Paste PRD
+
+Large textarea
+
+Minimum height
+
+300px
+
+Placeholder
+
+Paste your Product Requirements Document here...
+
+Display a live character counter.
+
+---
+
+## Section 5 - Analysis Configuration
+
+Create a checkbox group.
+
+Select every option by default.
+
+Options:
+
+- Risk Assessment
+- Launch Readiness Score
+- Missing Requirements
+- Executive Summary
+- Go / No-Go Recommendation
+
+---
+
+## Section 6 - Analyze Button
+
+Primary CTA
+
+Label
+
+Analyze PRD
+
+Behaviour
+
+Disable the button until:
+
+- a document is uploaded
+
+OR
+
+- PRD text has been entered
+
+When clicked
+
+Display a temporary success/info toast:
+
+"AI Analysis will be connected in the next development phase."
+
+No backend action.
+
+No API call.
+
+---
+
+# Validation
+
+Display validation messages for:
+
+- Missing Product Name
+- Missing Product Type
+- No PRD provided
+
+The Analyze button should never submit invalid data.
+
+---
+
+# UI Requirements
+
+Follow the same enterprise design used on the Dashboard.
+
+Use:
+
+- Rounded cards
+- Consistent spacing
+- Responsive layout
+- Accessible inputs
+- Soft shadows
+- Modern SaaS appearance
+
+---
+
+# Component Structure
+
+Create reusable components where appropriate.
+
+Suggested components:
+
+- ProductInformationForm
+- PRDUploadArea
+- PRDTextEditor
+- AnalysisOptions
+- AnalysisActions
+
+Do not over-engineer.
+
+---
+
+# Future Integration Placeholders
+
+Leave clear placeholder comments for:
+
+- Gemini Analysis API
+- Prompt Engine
+- Supabase Storage
+- Analysis History
+
+Do not implement them.
+
+---
+
+# Deliverables
+
+After implementation provide:
+
+1. Components created
+
+2. Files created
+
+3. Files modified
+
+4. Future integration points
+
+Only implement this feature.
+
+Do not modify backend files.

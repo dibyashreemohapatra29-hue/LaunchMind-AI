@@ -4,6 +4,7 @@ import { TopBar } from "./TopBar";
 import { Dashboard } from "../../pages/Dashboard";
 import { Integrations } from "../../pages/Integrations";
 import { PlaceholderPage } from "../../pages/PlaceholderPage";
+import { NewAnalysis } from "../../pages/NewAnalysis";
 
 export function DashboardLayout() {
   const [currentView, setCurrentView] = useState("dashboard");
@@ -15,7 +16,7 @@ export function DashboardLayout() {
       case "integrations":
         return <Integrations />;
       case "new-analysis":
-        return <PlaceholderPage title="New Analysis" description="Upload a PRD to begin a new risk and readiness analysis." />;
+        return <NewAnalysis />;
       case "history":
         return <PlaceholderPage title="Analysis History" description="View past PRD analyses and launch decisions." />;
       case "settings":
