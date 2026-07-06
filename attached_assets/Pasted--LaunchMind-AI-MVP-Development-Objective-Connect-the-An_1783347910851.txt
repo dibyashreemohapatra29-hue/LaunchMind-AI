@@ -1,0 +1,202 @@
+# LaunchMind AI - MVP Development
+
+## Objective
+
+Connect the "Analyze PRD" workflow to the Gemini API.
+
+The goal is to send the uploaded or pasted PRD to Gemini and receive a structured AI response.
+
+Do not implement database storage.
+
+Do not implement history.
+
+Focus only on connecting the frontend with the backend AI workflow.
+
+---
+
+# Rules
+
+- Preserve the current architecture.
+- Do NOT modify the dashboard.
+- Do NOT modify Supabase.
+- Do NOT create database tables.
+- Use the existing Express backend.
+- Read the Gemini API key from environment variables.
+- Keep the implementation modular.
+- Do not install unnecessary packages.
+
+---
+
+# User Flow
+
+Dashboard
+
+↓
+
+New Analysis
+
+↓
+
+User uploads or pastes PRD
+
+↓
+
+User clicks Analyze PRD
+
+↓
+
+Frontend sends request to backend
+
+↓
+
+Backend calls Gemini
+
+↓
+
+Gemini returns structured JSON
+
+↓
+
+Frontend displays loading state
+
+↓
+
+Frontend navigates to Results page (placeholder for now)
+
+---
+
+# Backend
+
+Create an API endpoint.
+
+POST
+
+/api/analyze
+
+Accept:
+
+- Product Name
+- Product Type
+- PRD Content
+- Selected Analysis Options
+
+Validate the request.
+
+Return proper HTTP status codes.
+
+---
+
+# Gemini Service
+
+Create a reusable Gemini service.
+
+The service should:
+
+- Read API key from environment variables.
+- Accept PRD text.
+- Send a prompt to Gemini.
+- Return structured JSON.
+- Handle API failures gracefully.
+
+Do not hardcode API keys.
+
+---
+
+# AI Prompt
+
+Use a placeholder prompt.
+
+The prompt should instruct Gemini to return JSON with:
+
+- Executive Summary
+- Launch Readiness Score
+- Risks
+- Missing Requirements
+- Go / No-Go Recommendation
+
+Do not use the final production prompts yet.
+
+Those will be integrated later.
+
+---
+
+# Frontend
+
+When the user clicks Analyze:
+
+Display:
+
+Loading spinner
+
+Disable all inputs.
+
+Prevent duplicate submissions.
+
+---
+
+# Error Handling
+
+Handle:
+
+- Empty response
+- Invalid response
+- API failure
+- Network failure
+
+Display user-friendly error messages.
+
+---
+
+# Success
+
+If analysis succeeds:
+
+Navigate to
+
+/results
+
+Pass the returned JSON.
+
+Do not build the Results page yet.
+
+---
+
+# Architecture
+
+Create reusable modules.
+
+Suggested:
+
+Frontend
+
+services/
+
+api/
+
+Backend
+
+services/
+
+routes/
+
+Keep business logic separated from routes.
+
+---
+
+# Deliverables
+
+After implementation provide:
+
+1. Files created
+
+2. Files modified
+
+3. API endpoint
+
+4. Gemini service
+
+5. Future integration points
+
+Implement only this feature.
+
+Do not implement Supabase.
