@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { AnalysisResult, sendToSlack } from "../lib/api";
+import { AnalysisResult, sendToSlack, exportToDrive } from "../lib/api";
 import { AnalysisConfig } from "../components/new-analysis/AnalysisOptions";
 import { mapToResultsViewData, ResultsViewData } from "../lib/resultsMapper";
 import { Icons } from "../components/icons";
@@ -13,6 +13,7 @@ import { SelectedOptions } from "../components/results/SelectedOptions";
 import { ResultsActions } from "../components/results/ResultsActions";
 import { ResultsSkeleton } from "../components/results/ResultsSkeleton";
 import { ResultsError } from "../components/results/ResultsError";
+import { DriveStatus } from "../components/results/GoogleDriveExportButton";
 
 type SlackStatus = "idle" | "loading" | "success" | "error";
 
@@ -26,6 +27,8 @@ interface ResultsProps {
   backTarget?: "new-analysis" | "history";
   historyMeta?: { productName: string; createdAt: string } | null;
   productName?: string | null;
+  productType?: string | null;
+  onShowToast?: (message: string) => void;
 }
 
 export function Results({
@@ -38,9 +41,13 @@ export function Results({
   backTarget = "new-analysis",
   historyMeta = null,
   productName = null,
+  productType = null,
+  onShowToast,
 }: ResultsProps) {
   const [slackStatus, setSlackStatus] = useState<SlackStatus>("idle");
   const [slackError, setSlackError] = useState<string | null>(null);
+  const [driveStatus, setDriveStatus] = useState<DriveStatus>("idle");
+  const [driveError, setDriveError] = useState<string | null>(null);
 
   const computedViewData = useMemo(
     () => (result ? mapToResultsViewData(result, selectedOptions) : null),
@@ -74,6 +81,39 @@ export function Results({
         err instanceof Error ? err.message : "Unable to send message.";
       setSlackError(message);
       setSlackStatus("error");
+    }
+  };
+
+  const handleExportToDrive = async () => {
+    if (!viewData || driveStatus === "uploading" || driveStatus === "saved") return;
+    setDriveStatus("uploading");
+    setDriveError(null);
+
+    const resolvedProductName = historyMeta?.productName ?? productName ?? "Unknown Product";
+    const resolvedDate = historyMeta?.createdAt
+      ? new Date(historyMeta.createdAt).toLocaleDateString()
+      : new Date().toLocaleDateString();
+
+    try {
+      await exportToDrive({
+        productName: resolvedProductName,
+        productType: productType ?? "Not specified",
+        analysisDate: resolvedDate,
+        score: viewData.scoreCard.score,
+        riskLevel: viewData.scoreCard.riskLevel,
+        recommendation: viewData.recommendation.decision,
+        executiveSummary: viewData.executiveSummary,
+        risks: viewData.risks,
+        missingRequirements: viewData.missingRequirements,
+        aiRecommendations: viewData.aiRecommendations,
+      });
+      setDriveStatus("saved");
+      onShowToast?.("Report saved to Google Drive");
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Export to Google Drive failed.";
+      setDriveError(message);
+      setDriveStatus("error");
     }
   };
 
@@ -140,6 +180,9 @@ export function Results({
             onShareToSlack={handleShareToSlack}
             slackStatus={slackStatus}
             slackError={slackError}
+            onExportToDrive={handleExportToDrive}
+            driveStatus={driveStatus}
+            driveError={driveError}
           />
         </>
       )}

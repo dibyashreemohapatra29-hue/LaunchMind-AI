@@ -69,3 +69,44 @@ export async function getSlackStatus(): Promise<{ configured: boolean }> {
   if (!response || !response.ok) return { configured: false };
   return response.json().catch(() => ({ configured: false }));
 }
+
+export interface DriveExportPayload {
+  productName: string;
+  productType: string;
+  analysisDate: string;
+  score: number;
+  riskLevel: string;
+  recommendation: string;
+  executiveSummary: string;
+  risks: { risk: string; severity: string; impact: string; suggestedAction: string }[];
+  missingRequirements: { title: string; description: string; priority: string }[];
+  aiRecommendations: string[];
+}
+
+export interface DriveExportResult {
+  fileId: string;
+  fileLink: string;
+}
+
+export async function exportToDrive(payload: DriveExportPayload): Promise<DriveExportResult> {
+  const response = await fetch("/api/drive/export", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    const message = data?.error || "Export to Google Drive failed.";
+    throw new Error(message);
+  }
+
+  return data as DriveExportResult;
+}
+
+export async function getDriveStatus(): Promise<{ configured: boolean }> {
+  const response = await fetch("/api/drive/status").catch(() => null);
+  if (!response || !response.ok) return { configured: false };
+  return response.json().catch(() => ({ configured: false }));
+}

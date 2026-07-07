@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Icons } from "../components/icons";
-import { getSlackStatus } from "../lib/api";
+import { getSlackStatus, getDriveStatus } from "../lib/api";
 
 interface IntegrationItem {
   name: string;
@@ -26,11 +26,15 @@ const statusBadge: Record<IntegrationItem["status"], { label: string; className:
 
 export function Integrations() {
   const [slackConfigured, setSlackConfigured] = useState<boolean | null>(null);
+  const [driveConfigured, setDriveConfigured] = useState<boolean | null>(null);
 
   useEffect(() => {
     getSlackStatus()
       .then((s) => setSlackConfigured(s.configured))
       .catch(() => setSlackConfigured(false));
+    getDriveStatus()
+      .then((s) => setDriveConfigured(s.configured))
+      .catch(() => setDriveConfigured(false));
   }, []);
 
   const integrations: IntegrationItem[] = [
@@ -53,9 +57,14 @@ export function Integrations() {
     },
     {
       name: "Google Drive",
-      desc: "Import PRDs directly from Google Drive documents.",
+      desc: "Export AI analysis reports as professional PDFs directly to Google Drive.",
       icon: Icons.fileText,
-      status: "coming-soon",
+      status:
+        driveConfigured === null
+          ? "coming-soon"
+          : driveConfigured
+          ? "connected"
+          : "not-connected",
     },
     {
       name: "Google Calendar",
@@ -109,6 +118,7 @@ export function Integrations() {
 
       <p className="text-xs text-muted-foreground mt-6">
         To configure Slack, add a <code className="bg-muted px-1 py-0.5 rounded text-xs">SLACK_WEBHOOK_URL</code> secret in your Replit project settings.
+        For Google Drive, add <code className="bg-muted px-1 py-0.5 rounded text-xs">GOOGLE_CLIENT_ID</code>, <code className="bg-muted px-1 py-0.5 rounded text-xs">GOOGLE_CLIENT_SECRET</code>, <code className="bg-muted px-1 py-0.5 rounded text-xs">GOOGLE_REFRESH_TOKEN</code>, and <code className="bg-muted px-1 py-0.5 rounded text-xs">GOOGLE_DRIVE_FOLDER_ID</code>.
       </p>
     </div>
   );

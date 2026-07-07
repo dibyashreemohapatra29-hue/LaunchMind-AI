@@ -22,6 +22,7 @@ export function DashboardLayout() {
   const [historyViewData, setHistoryViewData] = useState<ResultsViewData | null>(null);
   const [historyMeta, setHistoryMeta] = useState<{ productName: string; createdAt: string } | null>(null);
   const [analysisProductName, setAnalysisProductName] = useState<string | null>(null);
+  const [analysisProductType, setAnalysisProductType] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const runAnalysis = async (payload: AnalyzePrdRequest) => {
@@ -31,6 +32,7 @@ export function DashboardLayout() {
     setHistoryViewData(null);
     setHistoryMeta(null);
     setAnalysisProductName(payload.productName);
+    setAnalysisProductType(payload.productType);
     setIsAnalyzing(true);
     setCurrentView("results");
 
@@ -98,6 +100,8 @@ export function DashboardLayout() {
             backTarget={historyViewData ? "history" : "new-analysis"}
             historyMeta={historyMeta}
             productName={analysisProductName}
+            productType={analysisProductType}
+            onShowToast={setToastMessage}
           />
         );
       case "history":

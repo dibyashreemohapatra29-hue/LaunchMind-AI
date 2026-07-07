@@ -1,0 +1,231 @@
+# LaunchMind AI - MVP Development
+
+## Objective
+
+Allow Product Managers to export completed LaunchMind AI reports directly into Google Drive.
+
+Users should be able to save the existing AI analysis as a professional PDF without running Gemini again.
+
+Do not modify the existing AI Analysis workflow.
+
+---
+
+# Rules
+
+- Preserve the existing architecture.
+- Do NOT modify Gemini prompts.
+- Do NOT modify Slack Integration.
+- Do NOT redesign the Dashboard.
+- Do NOT redesign the Results page.
+- Use reusable React + TypeScript components.
+- Keep Google Drive logic isolated inside its own service.
+- Read all Google credentials from environment variables.
+- Optimize for minimum Replit AI credits.
+- Use existing analysis data only.
+- Never call Gemini again during export.
+
+---
+
+# User Flow
+
+Dashboard
+
+↓
+
+New Analysis
+
+↓
+
+Gemini Analysis
+
+↓
+
+Analysis Results
+
+↓
+
+Click
+
+Export to Google Drive
+
+↓
+
+Generate PDF
+
+↓
+
+Upload PDF to Google Drive
+
+↓
+
+Display Success Message
+
+↓
+
+Button changes to
+
+Saved to Drive
+
+↓
+
+Disable button
+
+---
+
+# Google Drive Authentication
+
+Use Google OAuth credentials already configured in Replit Secrets.
+
+Required environment variables:
+
+GOOGLE_CLIENT_ID
+
+GOOGLE_CLIENT_SECRET
+
+GOOGLE_REDIRECT_URI
+
+GOOGLE_REFRESH_TOKEN
+
+GOOGLE_DRIVE_FOLDER_ID
+
+Never expose credentials to the frontend.
+
+---
+
+# PDF Generation
+
+Generate a professional PDF report containing:
+
+- LaunchMind AI Header
+- Product Name
+- Product Type
+- Analysis Date
+- Launch Readiness Score
+- Recommendation
+- Executive Summary
+- Missing Requirements
+- Risk Assessment
+- Top Risks
+- AI Recommendations
+
+Use the current analysis already available on the Results page.
+
+Do NOT request another Gemini response.
+
+---
+
+# Google Drive Upload
+
+Upload the generated PDF into the configured Google Drive folder.
+
+Always upload into the folder defined by:
+
+GOOGLE_DRIVE_FOLDER_ID
+
+Return:
+
+- Upload Success
+- Google Drive File ID
+- Google Drive File Link
+
+---
+
+# Results Page
+
+Add a new button:
+
+Export to Google Drive
+
+Button Flow:
+
+Export to Google Drive
+
+↓
+
+Uploading...
+
+↓
+
+Saved to Drive
+
+Disable the button after a successful upload.
+
+Prevent duplicate uploads.
+
+Display a success toast.
+
+---
+
+# Error Handling
+
+Handle gracefully:
+
+- Missing Google credentials
+- Invalid refresh token
+- Google authentication failure
+- Folder not found
+- Upload failure
+- PDF generation failure
+
+Display friendly error messages.
+
+Do not expose internal errors.
+
+---
+
+# Loading State
+
+While uploading:
+
+Disable all export actions.
+
+Display:
+
+Uploading to Google Drive...
+
+---
+
+# Component Structure
+
+Create reusable components.
+
+Suggested:
+
+- GoogleDriveExportButton
+- GoogleDriveService
+- PDFGenerator
+- GoogleDriveUploadHandler
+
+---
+
+# Future Integration Placeholders
+
+Leave TODO comments for:
+
+- Folder Picker
+- Shared Drives
+- Team Workspaces
+- Multiple Export Formats
+- Version History
+- Automatic Report Sync
+- Scheduled Exports
+
+Do not implement them.
+
+---
+
+# Deliverables
+
+After implementation provide:
+
+1. Files created
+
+2. Files modified
+
+3. Components created
+
+4. Environment variables added
+
+5. Future integration points
+
+Implement only this feature. 
