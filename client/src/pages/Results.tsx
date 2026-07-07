@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { AnalysisResult } from "../lib/api";
+import React, { useMemo, useState } from "react";
+import { AnalysisResult, sendToSlack } from "../lib/api";
 import { AnalysisConfig } from "../components/new-analysis/AnalysisOptions";
 import { mapToResultsViewData, ResultsViewData } from "../lib/resultsMapper";
 import { Icons } from "../components/icons";
@@ -14,6 +14,8 @@ import { ResultsActions } from "../components/results/ResultsActions";
 import { ResultsSkeleton } from "../components/results/ResultsSkeleton";
 import { ResultsError } from "../components/results/ResultsError";
 
+type SlackStatus = "idle" | "loading" | "success" | "error";
+
 interface ResultsProps {
   result: AnalysisResult | null;
   isLoading: boolean;
@@ -23,6 +25,7 @@ interface ResultsProps {
   viewDataOverride?: ResultsViewData | null;
   backTarget?: "new-analysis" | "history";
   historyMeta?: { productName: string; createdAt: string } | null;
+  productName?: string | null;
 }
 
 export function Results({
@@ -34,7 +37,11 @@ export function Results({
   viewDataOverride = null,
   backTarget = "new-analysis",
   historyMeta = null,
+  productName = null,
 }: ResultsProps) {
+  const [slackStatus, setSlackStatus] = useState<SlackStatus>("idle");
+  const [slackError, setSlackError] = useState<string | null>(null);
+
   const computedViewData = useMemo(
     () => (result ? mapToResultsViewData(result, selectedOptions) : null),
     [result, selectedOptions]
@@ -44,6 +51,31 @@ export function Results({
   const goBack = () => setCurrentView(backTarget);
   const goToNewAnalysis = () => setCurrentView("new-analysis");
   const goToDashboard = () => setCurrentView("dashboard");
+
+  const handleShareToSlack = async () => {
+    if (!viewData || slackStatus === "loading" || slackStatus === "success") return;
+    setSlackStatus("loading");
+    setSlackError(null);
+
+    try {
+      await sendToSlack({
+        productName: historyMeta?.productName ?? productName ?? "Unknown Product",
+        score: viewData.scoreCard.score,
+        recommendation: viewData.recommendation.decision,
+        summary: viewData.executiveSummary,
+        topRisks: viewData.risks.slice(0, 5).map((r) => ({
+          risk: r.risk,
+          severity: r.severity,
+        })),
+      });
+      setSlackStatus("success");
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "Unable to send message.";
+      setSlackError(message);
+      setSlackStatus("error");
+    }
+  };
 
   return (
     <div className="animate-in fade-in duration-500 pb-12 space-y-8">
@@ -102,7 +134,13 @@ export function Results({
           <MissingRequirements items={viewData.missingRequirements} />
           <AIRecommendations recommendations={viewData.aiRecommendations} />
           <SelectedOptions options={viewData.selectedOptions} />
-          <ResultsActions onRunNewAnalysis={goToNewAnalysis} onReturnToDashboard={goToDashboard} />
+          <ResultsActions
+            onRunNewAnalysis={goToNewAnalysis}
+            onReturnToDashboard={goToDashboard}
+            onShareToSlack={handleShareToSlack}
+            slackStatus={slackStatus}
+            slackError={slackError}
+          />
         </>
       )}
     </div>

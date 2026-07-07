@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { analyzeRouter } from "./routes/analyze";
+import { slackRouter } from "./routes/slack";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +14,7 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.use("/api", analyzeRouter);
+app.use("/api", slackRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
