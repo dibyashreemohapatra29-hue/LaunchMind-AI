@@ -14,6 +14,7 @@ import { ResultsActions } from "../components/results/ResultsActions";
 import { ResultsSkeleton } from "../components/results/ResultsSkeleton";
 import { ResultsError } from "../components/results/ResultsError";
 import { DriveStatus } from "../components/results/GoogleDriveExportButton";
+import { Toast } from "../components/ui/Toast";
 
 type SlackStatus = "idle" | "loading" | "success" | "error";
 
@@ -48,6 +49,8 @@ export function Results({
   const [slackError, setSlackError] = useState<string | null>(null);
   const [driveStatus, setDriveStatus] = useState<DriveStatus>("idle");
   const [driveError, setDriveError] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [driveSaved, setDriveSaved] = useState(false);
 
   const computedViewData = useMemo(
     () => (result ? mapToResultsViewData(result, selectedOptions) : null),
@@ -78,7 +81,7 @@ export function Results({
       setSlackStatus("success");
     } catch (err) {
       const message =
-        err instanceof Error ? err.message : "Unable to send message.";
+        err instanceof Error ? err.message : "Failed to send to Slack.";
       setSlackError(message);
       setSlackStatus("error");
     }
@@ -89,26 +92,19 @@ export function Results({
     setDriveStatus("uploading");
     setDriveError(null);
 
-    const resolvedProductName = historyMeta?.productName ?? productName ?? "Unknown Product";
-    const resolvedDate = historyMeta?.createdAt
-      ? new Date(historyMeta.createdAt).toLocaleDateString()
-      : new Date().toLocaleDateString();
-
     try {
       await exportToDrive({
-        productName: resolvedProductName,
-        productType: productType ?? "Not specified",
-        analysisDate: resolvedDate,
+        productName: historyMeta?.productName ?? productName ?? "Unknown Product",
         score: viewData.scoreCard.score,
-        riskLevel: viewData.scoreCard.riskLevel,
         recommendation: viewData.recommendation.decision,
-        executiveSummary: viewData.executiveSummary,
+        summary: viewData.executiveSummary,
         risks: viewData.risks,
         missingRequirements: viewData.missingRequirements,
         aiRecommendations: viewData.aiRecommendations,
       });
       setDriveStatus("saved");
-      onShowToast?.("Report saved to Google Drive");
+      setDriveSaved(true);
+      setToastMessage("Report saved to Google Drive");
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Export to Google Drive failed.";
@@ -118,7 +114,7 @@ export function Results({
   };
 
   return (
-    <div className="animate-in fade-in duration-500 pb-12 space-y-8">
+    <div className="pb-12 space-y-8">
       <div>
         <button
           onClick={goBack}
@@ -136,6 +132,19 @@ export function Results({
             : "Review AI-generated launch insights before making a release decision."}
         </p>
       </div>
+
+      {driveSaved && (
+        <div
+          role="status"
+          aria-live="polite"
+          aria-label="Report saved to Google Drive"
+          data-testid="drive-success-banner"
+          className="flex items-center gap-2 px-4 py-3 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-800 text-sm font-medium"
+        >
+          <Icons.checkCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+          Report saved to Google Drive
+        </div>
+      )}
 
       {isLoading && <ResultsSkeleton />}
 
@@ -185,6 +194,14 @@ export function Results({
             driveError={driveError}
           />
         </>
+      )}
+
+      {toastMessage && (
+        <Toast
+          message={toastMessage}
+          onDismiss={() => setToastMessage(null)}
+          durationMs={6000}
+        />
       )}
     </div>
   );
