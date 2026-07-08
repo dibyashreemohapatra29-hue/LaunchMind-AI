@@ -58,3 +58,7 @@ externalPort = 3001
 
 [nix]
 channel = "stable-25_05"
+
+[deployment]
+deploymentTarget = "vm"
+run = ["bash", "-c", "pnpm --filter server dev & exec pnpm --filter client dev"]
