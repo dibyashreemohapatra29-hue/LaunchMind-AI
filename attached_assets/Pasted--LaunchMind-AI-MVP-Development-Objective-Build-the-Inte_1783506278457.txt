@@ -1,0 +1,262 @@
+# LaunchMind AI - MVP Development
+
+## Objective
+
+Build the Intelligence Engine for LaunchMind AI.
+
+This is the core AI decision layer.
+
+The Intelligence Engine must consume ONLY the LaunchContext created in Prompt 08.
+
+Do NOT call Gemini.
+
+Do NOT redesign any UI.
+
+Do NOT modify any existing integrations.
+
+Do NOT modify the Context Engine.
+
+This prompt builds only reusable intelligence services.
+
+---
+
+# Rules
+
+- Preserve the existing architecture.
+- Consume only LaunchContext.
+- Never read directly from Gemini.
+- Never read directly from Supabase.
+- Never read directly from Slack.
+- Never read directly from Google Drive.
+- Do NOT modify Dashboard.
+- Do NOT modify Results Page.
+- Do NOT modify History.
+- Do NOT install unnecessary packages.
+- Use reusable TypeScript services.
+- Optimize for minimum Replit AI credits.
+- Skip automated feature testing.
+
+---
+
+# Architecture
+
+LaunchContext
+
+↓
+
+Launch Intelligence Engine
+
+↓
+
+Executive Dashboard (future)
+
+↓
+
+Workspace (future)
+
+---
+
+# Create Intelligence Engine
+
+Create a central IntelligenceEngine service.
+
+Its responsibility is to orchestrate all intelligence modules and return one unified Intelligence Result.
+
+---
+
+# Intelligence Modules
+
+Create the following independent modules.
+
+1. Launch Readiness Engine
+
+Input:
+
+LaunchContext
+
+Output:
+
+- launchReadinessScore
+- readinessLevel
+- decision
+
+Decision values:
+
+- GO
+- GO WITH RISKS
+- NO-GO
+
+Reuse existing analysis information.
+
+Do not call Gemini.
+
+---
+
+2. Timeline Intelligence
+
+Compute:
+
+- analysisAge
+- contextFreshness
+- staleDataWarning
+
+Return:
+
+timelineHealth
+
+timelineMessage
+
+---
+
+3. Risk Intelligence
+
+Analyze existing risk information.
+
+Return:
+
+- overallRisk
+- criticalRisks
+- mediumRisks
+- lowRisks
+- riskSummary
+
+Use existing Risk Assessment only.
+
+Do not generate new risks.
+
+---
+
+4. Recommendation Engine
+
+Aggregate recommendations already present.
+
+Return:
+
+- executiveRecommendation
+- priorityActions
+- blockers
+- nextSteps
+
+Reuse existing AI Recommendations.
+
+Do not generate new recommendations.
+
+---
+
+5. Confidence Engine
+
+Compute:
+
+overallConfidence
+
+ConfidenceLevel
+
+Supported values:
+
+- HIGH
+- MEDIUM
+- LOW
+
+Compute using:
+
+- analysis completeness
+- history availability
+- integration availability
+
+Do not call Gemini.
+
+---
+
+# Intelligence Result
+
+Create one reusable interface.
+
+LaunchIntelligence
+
+Include:
+
+launchReadiness
+
+timeline
+
+risk
+
+recommendation
+
+confidence
+
+generatedAt
+
+All modules return through this object.
+
+---
+
+# Folder Structure
+
+Suggested:
+
+services/
+
+IntelligenceEngine.ts
+
+LaunchReadinessEngine.ts
+
+TimelineIntelligence.ts
+
+RiskIntelligence.ts
+
+RecommendationEngine.ts
+
+ConfidenceEngine.ts
+
+types/
+
+LaunchIntelligence.ts
+
+Reuse existing folders whenever possible.
+
+---
+
+# Future Placeholders
+
+Leave TODO comments only.
+
+Future modules:
+
+- Predictive Launch Delay
+- GitHub Intelligence
+- Calendar Intelligence
+- Deployment Intelligence
+- RAG Intelligence
+
+Do not implement them.
+
+---
+
+# Deliverables
+
+After implementation provide:
+
+1. Files created
+
+2. Files modified
+
+3. Intelligence modules created
+
+4. LaunchIntelligence structure
+
+5. Future intelligence placeholders
+
+Implement only this feature.
+
+Do not build Executive Dashboard.
+
+Do not modify Workspace.
+
+Do not build RAG.
+
+Stop after the Intelligence Engine is complete.
+
+Do not run automated end-to-end testing.
+
+Only ensure the project compiles successfully.
