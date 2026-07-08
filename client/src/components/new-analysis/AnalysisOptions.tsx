@@ -1,5 +1,3 @@
-import { Icons } from "../icons";
-
 export interface AnalysisConfig {
   riskAssessment: boolean;
   launchReadinessScore: boolean;
@@ -13,11 +11,7 @@ interface AnalysisOptionsProps {
   onChange: (options: AnalysisConfig) => void;
 }
 
-export function AnalysisOptions({ options, onChange }: AnalysisOptionsProps) {
-  const toggleOption = (key: keyof AnalysisConfig) => {
-    onChange({ ...options, [key]: !options[key] });
-  };
-
+export function AnalysisOptions({ options }: AnalysisOptionsProps) {
   const optionLabels: Record<keyof AnalysisConfig, string> = {
     riskAssessment: "Risk Assessment",
     launchReadinessScore: "Launch Readiness Score",
