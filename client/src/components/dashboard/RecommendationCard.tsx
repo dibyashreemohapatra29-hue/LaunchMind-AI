@@ -1,4 +1,3 @@
-import React from "react";
 import { RecommendationViewModel } from "../../services/DashboardService";
 
 export function RecommendationCard({ executiveRecommendation }: RecommendationViewModel) {

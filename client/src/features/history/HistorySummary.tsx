@@ -1,4 +1,3 @@
-import React from "react";
 import { HistorySummary as HistorySummaryData, HistoryStatistics, TrendDirection } from "./HistoryTypes";
 import { Icons } from "../../components/icons";
 

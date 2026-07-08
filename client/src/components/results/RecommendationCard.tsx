@@ -1,4 +1,3 @@
-import React from "react";
 import { RecommendationData } from "../../lib/resultsMapper";
 
 const badgeClasses: Record<RecommendationData["decision"], string> = {

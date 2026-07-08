@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ProductInformationForm, ProductInfo } from "../components/new-analysis/ProductInformationForm";
 import { PRDUploadArea } from "../components/new-analysis/PRDUploadArea";
 import { PRDTextEditor } from "../components/new-analysis/PRDTextEditor";

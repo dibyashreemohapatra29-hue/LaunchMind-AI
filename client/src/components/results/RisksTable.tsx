@@ -1,4 +1,3 @@
-import React from "react";
 import { RiskRow, Severity } from "../../lib/resultsMapper";
 
 const severityBadgeClasses: Record<Severity, string> = {

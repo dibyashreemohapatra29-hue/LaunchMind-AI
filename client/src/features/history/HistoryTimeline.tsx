@@ -1,4 +1,3 @@
-import React from "react";
 import { HistoryItem } from "./HistoryTypes";
 import { HistoryCard } from "./HistoryCard";
 

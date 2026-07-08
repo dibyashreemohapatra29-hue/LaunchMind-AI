@@ -1,4 +1,3 @@
-import React from "react";
 import { Icons } from "../icons";
 import { RiskSummaryViewModel } from "../../services/DashboardService";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { DecisionViewModel } from "../../services/DashboardService";
 
 const badgeClasses: Record<DecisionViewModel["decision"], string> = {

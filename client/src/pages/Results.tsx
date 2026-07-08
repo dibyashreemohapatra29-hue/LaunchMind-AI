@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AnalysisResult, sendToSlack, exportToDrive } from "../lib/api";
 import { AnalysisConfig } from "../components/new-analysis/AnalysisOptions";
 import { mapToResultsViewData, ResultsViewData } from "../lib/resultsMapper";

@@ -1,4 +1,3 @@
-import React from "react";
 import { ScoreCardData } from "../../lib/resultsMapper";
 
 const riskBadgeClasses: Record<ScoreCardData["riskLevel"], string> = {

@@ -1,4 +1,3 @@
-import React from "react";
 import { Launch } from "./WorkspaceTypes";
 
 const decisionBadgeClasses: Record<Launch["decision"], string> = {

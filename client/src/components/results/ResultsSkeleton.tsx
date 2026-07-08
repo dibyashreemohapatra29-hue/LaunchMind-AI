@@ -1,4 +1,3 @@
-import React from "react";
 
 function SkeletonBlock({ className }: { className?: string }) {
   return <div className={`animate-pulse rounded-md bg-muted ${className ?? ""}`} />;

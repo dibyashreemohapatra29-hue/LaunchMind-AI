@@ -1,4 +1,3 @@
-import React from "react";
 import { TimelineEvent } from "./WorkspaceTypes";
 
 function formatTimestamp(iso: string | null): string {

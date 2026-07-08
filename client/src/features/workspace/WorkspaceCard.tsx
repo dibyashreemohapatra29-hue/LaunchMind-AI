@@ -1,4 +1,3 @@
-import React from "react";
 import { Workspace } from "./WorkspaceTypes";
 
 const healthClasses: Record<Workspace["overallHealth"], string> = {
