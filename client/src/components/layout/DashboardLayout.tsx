@@ -101,7 +101,6 @@ export function DashboardLayout() {
             historyMeta={historyMeta}
             productName={analysisProductName}
             productType={analysisProductType}
-            onShowToast={setToastMessage}
           />
         );
       case "history":

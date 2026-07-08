@@ -1,0 +1,292 @@
+# LaunchMind AI - MVP Development
+
+## Objective
+
+Build the central Context Engine for LaunchMind AI.
+
+This Context Engine becomes the single source of truth for every future Intelligence Module.
+
+The Context Engine should aggregate all currently available launch information into one unified Launch Context object.
+
+Do NOT modify any completed feature.
+
+Do NOT redesign the UI.
+
+Do NOT call Gemini again.
+
+Do NOT add any external integrations.
+
+This prompt only builds the Context Engine.
+
+---
+
+# Rules
+
+- Preserve the existing architecture.
+- Do NOT modify Dashboard.
+- Do NOT modify AI Analysis.
+- Do NOT modify Slack.
+- Do NOT modify Google Drive.
+- Do NOT modify Supabase schema.
+- Do NOT modify History.
+- Do NOT redesign any pages.
+- Do NOT install unnecessary packages.
+- Use reusable TypeScript services.
+- Optimize for minimum Replit AI credits.
+- Skip automated feature testing.
+- Build only the Context Engine.
+
+---
+
+# Purpose
+
+Every Intelligence Module built later must consume ONLY the Launch Context.
+
+Nothing should read directly from:
+
+- Gemini
+- Supabase
+- Slack
+- Google Drive
+
+The Context Engine becomes the single aggregation layer.
+
+---
+
+# Architecture
+
+Dashboard
+
+↓
+
+Analysis Results
+
+↓
+
+Context Builder
+
+↓
+
+Launch Context
+
+↓
+
+Future Intelligence Modules
+
+↓
+
+Executive Dashboard
+
+---
+
+# Launch Context
+
+Create one reusable interface.
+
+LaunchContext
+
+Fields should include:
+
+analysis
+
+history
+
+metadata
+
+integrationStatus
+
+launchMetrics
+
+recommendation
+
+confidence
+
+timestamps
+
+workspace
+
+launch
+
+Each section should be strongly typed.
+
+---
+
+# Analysis Context
+
+Reuse the existing Gemini analysis.
+
+Include:
+
+- Product Name
+- Product Type
+- Readiness Score
+- Executive Summary
+- Recommendation
+- Confidence Score
+- Missing Requirements
+- AI Recommendations
+- Risk Assessment
+
+Never generate another Gemini response.
+
+---
+
+# History Context
+
+Load from existing Supabase history.
+
+Include:
+
+- Total Analyses
+- Previous Launches
+- Previous Scores
+- Previous Recommendations
+- Last Updated
+
+Do not implement semantic search.
+
+Do not implement embeddings.
+
+Use existing history only.
+
+---
+
+# Integration Context
+
+Create a reusable object.
+
+Current integrations:
+
+Slack
+
+status
+
+lastShared
+
+Google Drive
+
+status
+
+lastExported
+
+Future integrations
+
+GitHub
+
+Calendar
+
+Leave TODO placeholders only.
+
+Do not implement them.
+
+---
+
+# Launch Metrics
+
+Create reusable metrics.
+
+Include:
+
+overallHealth
+
+riskLevel
+
+launchReadiness
+
+analysisAge
+
+historyAvailable
+
+reportExported
+
+slackShared
+
+These values should be computed from existing data.
+
+Do not call Gemini.
+
+---
+
+# Context Builder
+
+Create one Context Builder service.
+
+Responsibilities:
+
+Collect analysis
+
+Collect history
+
+Collect integration status
+
+Build Launch Context
+
+Return one object.
+
+Every future module must consume this object.
+
+---
+
+# Folder Structure
+
+Suggested:
+
+services/
+
+ContextEngine.ts
+
+ContextBuilder.ts
+
+types/
+
+LaunchContext.ts
+
+utils/
+
+ContextHelpers.ts
+
+Reuse existing folders whenever possible.
+
+---
+
+# Future Placeholders
+
+Leave TODO comments for:
+
+GitHub Provider
+
+Calendar Provider
+
+RAG Provider
+
+Workspace Provider
+
+Timeline Provider
+
+Do not implement them.
+
+---
+
+# Deliverables
+
+After implementation provide:
+
+1. Files created
+
+2. Files modified
+
+3. Context structure
+
+4. Future providers
+
+Implement only this feature.
+
+Do not continue to Intelligence Modules.
+
+Do not continue to Dashboard.
+
+Stop after the Context Engine is complete.
+
+Do not run automated end-to-end testing.
+
+Only ensure the project compiles successfully.

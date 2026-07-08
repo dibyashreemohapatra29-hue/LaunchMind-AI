@@ -29,7 +29,6 @@ interface ResultsProps {
   historyMeta?: { productName: string; createdAt: string } | null;
   productName?: string | null;
   productType?: string | null;
-  onShowToast?: (message: string) => void;
 }
 
 export function Results({
@@ -43,7 +42,6 @@ export function Results({
   historyMeta = null,
   productName = null,
   productType = null,
-  onShowToast,
 }: ResultsProps) {
   const [slackStatus, setSlackStatus] = useState<SlackStatus>("idle");
   const [slackError, setSlackError] = useState<string | null>(null);
@@ -95,9 +93,12 @@ export function Results({
     try {
       await exportToDrive({
         productName: historyMeta?.productName ?? productName ?? "Unknown Product",
+        productType: productType ?? "Unknown",
+        analysisDate: historyMeta?.createdAt ?? new Date().toISOString(),
         score: viewData.scoreCard.score,
+        riskLevel: viewData.scoreCard.riskLevel,
         recommendation: viewData.recommendation.decision,
-        summary: viewData.executiveSummary,
+        executiveSummary: viewData.executiveSummary,
         risks: viewData.risks,
         missingRequirements: viewData.missingRequirements,
         aiRecommendations: viewData.aiRecommendations,
