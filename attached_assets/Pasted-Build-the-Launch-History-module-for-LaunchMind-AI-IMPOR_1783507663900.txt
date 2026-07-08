@@ -1,0 +1,247 @@
+Build the Launch History module for LaunchMind AI.
+
+IMPORTANT
+
+This task only builds the History layer.
+
+DO NOT modify:
+- Executive Dashboard
+- Context Engine
+- Intelligence Engine
+- Analysis Flow
+- AI prompts
+- Slack Integration
+- Google Drive Integration
+- Supabase schema
+- Existing APIs
+
+DO NOT call Gemini.
+
+DO NOT run automated e2e tests.
+
+Run only:
+
+tsc --noEmit
+
+------------------------------------------------
+
+OBJECTIVE
+
+Build a reusable Launch History module that converts previous analyses into structured historical launch data.
+
+This is the foundation for future RAG.
+
+DO NOT implement vector search.
+
+DO NOT implement embeddings.
+
+DO NOT implement semantic search.
+
+Only prepare the architecture.
+
+------------------------------------------------
+
+Create these files
+
+client/src/features/history/
+
+HistoryService.ts
+
+HistoryTypes.ts
+
+HistoryPage.tsx
+
+HistoryCard.tsx
+
+HistoryTimeline.tsx
+
+HistorySummary.tsx
+
+------------------------------------------------
+
+HistoryService
+
+Read all existing analyses from Supabase.
+
+Transform them into strongly typed history objects.
+
+Never recalculate AI outputs.
+
+Never call Gemini.
+
+------------------------------------------------
+
+Create
+
+LaunchHistory
+
+HistoryItem
+
+HistorySummary
+
+HistoryStatistics
+
+------------------------------------------------
+
+HistoryItem
+
+id
+
+productName
+
+productType
+
+analysisDate
+
+launchReadiness
+
+decision
+
+riskLevel
+
+confidence
+
+recommendation
+
+reportAvailable
+
+slackShared
+
+driveExported
+
+------------------------------------------------
+
+HistorySummary
+
+totalLaunches
+
+averageScore
+
+highestScore
+
+lowestScore
+
+goCount
+
+goWithRiskCount
+
+noGoCount
+
+lastLaunchDate
+
+------------------------------------------------
+
+HistoryStatistics
+
+scoreTrend
+
+decisionTrend
+
+riskTrend
+
+confidenceTrend
+
+------------------------------------------------
+
+History Page
+
+Display
+
+- Recent Launches
+- Launch Summary
+- Decision Distribution
+- Score Trend
+- Recent Recommendations
+
+Use reusable cards.
+
+Use reusable timeline components.
+
+No charts.
+
+No external libraries.
+
+------------------------------------------------
+
+Navigation
+
+If Launch History already exists,
+
+reuse the existing navigation.
+
+Otherwise,
+
+add one navigation entry.
+
+------------------------------------------------
+
+Future Providers
+
+Leave TODO placeholders only.
+
+semanticSearch()
+
+vectorSearch()
+
+similarLaunches()
+
+timelinePrediction()
+
+Do NOT implement them.
+
+------------------------------------------------
+
+Rules
+
+History must be read-only.
+
+History never recalculates scores.
+
+History only formats existing analysis data.
+
+Dashboard must remain untouched.
+
+Analysis pipeline must remain untouched.
+
+Context Engine must remain untouched.
+
+Intelligence Engine must remain untouched.
+
+------------------------------------------------
+
+Verification
+
+Run only
+
+tsc --noEmit
+
+Confirm
+
+- Zero NEW TypeScript errors
+- Existing warnings only
+- No runtime errors
+- No automated tests executed
+
+Stop after implementation.
+
+Return
+
+1. Files created
+
+2. Files modified
+
+3. History architecture
+
+4. History object schema
+
+5. Verification results
+
+Do not continue to RAG.
+
+Do not build Workspace.
+
+Do not build Multiple Launches.
+
+Do not build Calendar Intelligence.
+
+Do not build GitHub Intelligence.

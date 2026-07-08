@@ -6,7 +6,7 @@ import { Integrations } from "../../pages/Integrations";
 import { PlaceholderPage } from "../../pages/PlaceholderPage";
 import { NewAnalysis } from "../../pages/NewAnalysis";
 import { Results } from "../../pages/Results";
-import { History } from "../../pages/History";
+import { HistoryPage } from "../../features/history/HistoryPage";
 import { ExecutiveDashboard } from "../../pages/ExecutiveDashboard";
 import { Toast } from "../ui/Toast";
 import { analyzePrd, AnalysisResult, AnalyzePrdRequest } from "../../lib/api";
@@ -107,7 +107,7 @@ export function DashboardLayout() {
           />
         );
       case "history":
-        return <History setCurrentView={setCurrentView} onSelectAnalysis={openHistoryEntry} />;
+        return <HistoryPage setCurrentView={setCurrentView} onSelectAnalysis={openHistoryEntry} />;
       case "settings":
         return <PlaceholderPage title="Settings" description="Manage your LaunchMind AI preferences and workspace settings." />;
       default:
