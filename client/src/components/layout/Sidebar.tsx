@@ -12,6 +12,7 @@ export function Sidebar({ currentView, setCurrentView }: SidebarProps) {
     { id: "executive-dashboard", label: "Executive Dashboard", icon: Icons.trendingUp },
     { id: "new-analysis", label: "New Analysis", icon: Icons.plus },
     { id: "history", label: "History", icon: Icons.history },
+    { id: "workspace", label: "Workspace", icon: Icons.layers },
     { id: "integrations", label: "Integrations", icon: Icons.integration },
     { id: "settings", label: "Settings", icon: Icons.settings },
   ];

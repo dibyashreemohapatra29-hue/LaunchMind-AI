@@ -1,2 +1,3 @@
 - [No-router view switching in LaunchMind-AI](launchmind-view-switching.md) — client has no react-router; "navigate" means setting DashboardLayout's currentView state.
 - [Supabase DDL requires manual SQL editor step](supabase-ddl-manual-step.md) — agent tools can't create tables in an external Supabase project; only anon key is available, no service-role/DB credentials.
+- [Per-launch engine reuse](launchmind-per-launch-engine-reuse.md) — feed a specific saved launch into ContextBuilder's `currentAnalysis` input to get an Executive-Dashboard view model for it without touching the shared dashboard page.

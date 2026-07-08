@@ -12,6 +12,7 @@ export function TopBar({ currentView }: TopBarProps) {
       case "executive-dashboard": return "Executive Dashboard";
       case "new-analysis": return "New Analysis";
       case "history": return "Analysis History";
+      case "workspace": return "Workspace";
       case "integrations": return "Integrations";
       case "settings": return "Settings";
       default: return "Dashboard";

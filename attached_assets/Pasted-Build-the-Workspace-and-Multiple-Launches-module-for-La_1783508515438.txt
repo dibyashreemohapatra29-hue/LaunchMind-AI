@@ -1,0 +1,223 @@
+Build the Workspace and Multiple Launches module for LaunchMind AI.
+
+IMPORTANT
+
+Build ONLY this feature.
+
+DO NOT modify:
+
+- Context Engine
+- Intelligence Engine
+- Executive Dashboard logic
+- Launch History module
+- AI Analysis flow
+- Gemini prompts
+- Slack Integration
+- Google Drive Integration
+- Supabase schema
+- Existing APIs
+
+DO NOT implement RAG.
+
+DO NOT implement GitHub Intelligence.
+
+DO NOT implement Calendar Intelligence.
+
+DO NOT run automated tests.
+
+Run only:
+
+tsc --noEmit
+
+------------------------------------------------
+
+OBJECTIVE
+
+Complete the remaining core MVP by allowing LaunchMind AI to manage multiple launches inside a single workspace.
+
+Reuse existing Supabase data.
+
+Do not create new database tables.
+
+Workspace is a logical grouping only.
+
+------------------------------------------------
+
+Create
+
+client/src/features/workspace/
+
+WorkspaceTypes.ts
+
+WorkspaceService.ts
+
+WorkspacePage.tsx
+
+WorkspaceCard.tsx
+
+LaunchSwitcher.tsx
+
+TimelinePanel.tsx
+
+------------------------------------------------
+
+Workspace Model
+
+Workspace
+
+id
+
+name
+
+totalLaunches
+
+latestLaunch
+
+overallHealth
+
+averageReadiness
+
+------------------------------------------------
+
+Launch Model
+
+launchId
+
+productName
+
+productType
+
+analysisDate
+
+launchReadiness
+
+decision
+
+riskLevel
+
+confidence
+
+status
+
+------------------------------------------------
+
+WorkspaceService
+
+Read existing launch analyses.
+
+Group launches logically.
+
+Never recalculate AI.
+
+Never call Gemini.
+
+------------------------------------------------
+
+Launch Switcher
+
+Allow selecting any previous launch.
+
+Changing launch updates
+
+- Executive Dashboard
+- Launch History
+- Timeline
+
+Only update view state.
+
+Never rerun analysis.
+
+------------------------------------------------
+
+Timeline Panel
+
+Show
+
+Analysis Created
+
+Slack Shared
+
+Drive Exported
+
+Latest Activity
+
+Current Status
+
+Display chronological events only.
+
+No charts.
+
+------------------------------------------------
+
+Workspace Page
+
+Display
+
+Workspace summary
+
+Launch count
+
+Recent launches
+
+Current selected launch
+
+Timeline
+
+Overall readiness
+
+------------------------------------------------
+
+Rules
+
+Workspace is logical only.
+
+No authentication.
+
+No organizations.
+
+No permissions.
+
+No multi-tenant backend.
+
+Reuse existing HistoryService.
+
+Reuse existing DashboardService.
+
+Reuse existing Context Engine.
+
+Reuse existing Launch Intelligence.
+
+------------------------------------------------
+
+Verification
+
+Run only
+
+tsc --noEmit
+
+Confirm
+
+- Zero NEW TypeScript errors
+- Existing warnings only
+- No runtime errors
+- No automated testing
+
+Stop after implementation.
+
+Return
+
+1. Files created
+
+2. Files modified
+
+3. Workspace architecture
+
+4. Workspace object model
+
+5. Verification results
+
+Do not continue to GitHub Intelligence.
+
+Do not continue to Calendar Intelligence.
+
+Do not continue to RAG.
