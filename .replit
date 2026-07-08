@@ -56,9 +56,14 @@ externalPort = 80
 localPort = 5001
 externalPort = 3001
 
+[[ports]]
+localPort = 8099
+externalPort = 8099
+
 [nix]
 channel = "stable-25_05"
 
 [deployment]
-deploymentTarget = "vm"
-run = ["bash", "-c", "pnpm --filter server dev & exec pnpm --filter client dev"]
+deploymentTarget = "autoscale"
+run = ["pnpm", "start"]
+build = ["pnpm", "build"]
