@@ -1,0 +1,187 @@
+This is the FINAL BUILD prompt for LaunchMind AI.
+
+Do NOT add any new product features.
+
+Do NOT add GitHub integration.
+
+Do NOT add Google Calendar integration.
+
+Do NOT add Gmail.
+
+Do NOT add RAG.
+
+Do NOT modify AI logic.
+
+Do NOT modify Context Engine.
+
+Do NOT modify Intelligence Engine.
+
+Do NOT modify Workspace logic.
+
+Do NOT modify History logic.
+
+Do NOT modify Slack or Drive integrations.
+
+Do NOT touch database schema.
+
+No automated testing.
+
+No end-to-end testing.
+
+Only polish the existing MVP.
+
+-----------------------
+
+GOAL
+
+Make LaunchMind AI look like a production-ready enterprise SaaS product suitable for a capstone demo.
+
+-----------------------
+
+BRANDING
+
+Improve visual consistency across the application.
+
+Use one consistent color system.
+
+Improve typography hierarchy.
+
+Improve spacing.
+
+Improve padding.
+
+Improve icon consistency.
+
+Improve card elevation.
+
+Improve section headers.
+
+Improve empty states.
+
+Improve loading states.
+
+Improve success banners.
+
+Improve error banners.
+
+Use the existing LaunchMind branding throughout.
+
+-----------------------
+
+EXECUTIVE DASHBOARD
+
+Fix every visual issue.
+
+Specifically fix the overlapping GO / NO-GO badge.
+
+Improve responsiveness.
+
+Improve card alignment.
+
+Equalize card heights.
+
+Improve progress bar spacing.
+
+Improve score presentation.
+
+Improve readability.
+
+Improve recommendation section.
+
+Improve confidence section.
+
+Improve timeline section.
+
+Improve risk section.
+
+Improve whitespace.
+
+Do not change calculations.
+
+-----------------------
+
+WORKSPACE
+
+Improve spacing.
+
+Improve launch selector.
+
+Improve timeline layout.
+
+Improve card consistency.
+
+Improve summary presentation.
+
+-----------------------
+
+HISTORY
+
+Improve timeline appearance.
+
+Improve cards.
+
+Improve typography.
+
+Improve badges.
+
+Improve responsiveness.
+
+-----------------------
+
+GENERAL UI
+
+Improve sidebar.
+
+Improve top navigation.
+
+Improve search bar.
+
+Improve hover effects.
+
+Improve button consistency.
+
+Improve tables.
+
+Improve mobile responsiveness.
+
+Improve desktop responsiveness.
+
+Improve accessibility.
+
+Improve scroll behavior.
+
+Improve transitions using lightweight CSS only.
+
+Do not add heavy animations.
+
+-----------------------
+
+QUALITY
+
+Keep TypeScript clean.
+
+Do not introduce warnings.
+
+Do not introduce new packages.
+
+Do not introduce new APIs.
+
+Do not touch backend logic.
+
+Do not touch Gemini.
+
+Do not touch Supabase.
+
+No automated testing.
+
+Stop immediately after implementation.
+
+Provide a complete summary of:
+
+1. Files modified
+
+2. UI improvements
+
+3. Bugs fixed
+
+4. Verification completed

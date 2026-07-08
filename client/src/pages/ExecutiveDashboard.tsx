@@ -6,7 +6,6 @@ import { ExecutiveDashboardSkeleton } from "../components/dashboard/ExecutiveDas
 import { ExecutiveDashboardEmpty } from "../components/dashboard/ExecutiveDashboardEmpty";
 import { ExecutiveDashboardError } from "../components/dashboard/ExecutiveDashboardError";
 import { LaunchReadinessCard } from "../components/dashboard/LaunchReadinessCard";
-import { DecisionBadge } from "../components/dashboard/DecisionBadge";
 import { TimelineHealthCard } from "../components/dashboard/TimelineHealthCard";
 import { RiskSummaryCard } from "../components/dashboard/RiskSummaryCard";
 import { ConfidenceCard } from "../components/dashboard/ConfidenceCard";
@@ -66,12 +65,7 @@ export function ExecutiveDashboard({ setCurrentView }: ExecutiveDashboardProps) 
 
   return (
     <div className="animate-in fade-in duration-500 space-y-8 pb-12">
-      <div className="relative">
-        <LaunchReadinessCard {...viewModel.launchReadiness} />
-        <div className="absolute top-6 right-6">
-          <DecisionBadge decision={viewModel.decision.decision} />
-        </div>
-      </div>
+      <LaunchReadinessCard {...viewModel.launchReadiness} decision={viewModel.decision.decision} />
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <TimelineHealthCard {...viewModel.timeline} />

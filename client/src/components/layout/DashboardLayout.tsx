@@ -17,6 +17,7 @@ import { saveAnalysisToHistory, fetchAnalysisById } from "../../lib/historyApi";
 
 export function DashboardLayout() {
   const [currentView, setCurrentView] = useState("dashboard");
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
@@ -120,9 +121,14 @@ export function DashboardLayout() {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
+      <Sidebar
+        currentView={currentView}
+        setCurrentView={setCurrentView}
+        isMobileOpen={isMobileSidebarOpen}
+        onClose={() => setIsMobileSidebarOpen(false)}
+      />
       <div className="flex-1 flex flex-col min-w-0">
-        <TopBar currentView={currentView} />
+        <TopBar currentView={currentView} onMenuClick={() => setIsMobileSidebarOpen(true)} />
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
           <div className="max-w-6xl mx-auto">
             {renderContent()}

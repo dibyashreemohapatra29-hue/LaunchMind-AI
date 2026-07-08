@@ -3,11 +3,11 @@ import { Icons } from "../icons";
 
 export function RecentActivity() {
   const activities = [
-    { id: 1, type: "upload", content: "PRD uploaded", target: "Q3 Payment Gateway Integration", time: "2h ago", icon: Icons.upload, color: "text-blue-500", bg: "bg-blue-100" },
-    { id: 2, type: "analysis", content: "Analysis completed", target: "Q3 Payment Gateway Integration", time: "1h 45m ago", icon: Icons.checkCircle, color: "text-emerald-500", bg: "bg-emerald-100" },
-    { id: 3, type: "notification", content: "Slack notification sent", target: "#product-updates", time: "1h 45m ago", icon: Icons.slack, color: "text-amber-500", bg: "bg-amber-100" },
-    { id: 4, type: "calendar", content: "Launch review scheduled", target: "Calendar event created", time: "1h 30m ago", icon: Icons.calendar, color: "text-purple-500", bg: "bg-purple-100" },
-    { id: 5, type: "export", content: "Report exported", target: "Mobile Push Notifications Revamp", time: "Yesterday", icon: Icons.download, color: "text-slate-500", bg: "bg-slate-100" },
+    { id: 1, type: "upload", content: "PRD uploaded", target: "Q3 Payment Gateway Integration", time: "2h ago", icon: Icons.upload, color: "text-blue-600", bg: "bg-blue-500/10" },
+    { id: 2, type: "analysis", content: "Analysis completed", target: "Q3 Payment Gateway Integration", time: "1h 45m ago", icon: Icons.checkCircle, color: "text-emerald-600", bg: "bg-emerald-500/10" },
+    { id: 3, type: "notification", content: "Slack notification sent", target: "#product-updates", time: "1h 45m ago", icon: Icons.slack, color: "text-amber-600", bg: "bg-amber-500/10" },
+    { id: 4, type: "calendar", content: "Launch review scheduled", target: "Calendar event created", time: "1h 30m ago", icon: Icons.calendar, color: "text-purple-600", bg: "bg-purple-500/10" },
+    { id: 5, type: "export", content: "Report exported", target: "Mobile Push Notifications Revamp", time: "Yesterday", icon: Icons.download, color: "text-muted-foreground", bg: "bg-muted" },
   ];
 
   return (
