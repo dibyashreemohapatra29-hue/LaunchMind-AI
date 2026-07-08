@@ -9,6 +9,7 @@ export function TopBar({ currentView }: TopBarProps) {
   const getTitle = () => {
     switch (currentView) {
       case "dashboard": return "Dashboard";
+      case "executive-dashboard": return "Executive Dashboard";
       case "new-analysis": return "New Analysis";
       case "history": return "Analysis History";
       case "integrations": return "Integrations";

@@ -7,6 +7,7 @@ import { PlaceholderPage } from "../../pages/PlaceholderPage";
 import { NewAnalysis } from "../../pages/NewAnalysis";
 import { Results } from "../../pages/Results";
 import { History } from "../../pages/History";
+import { ExecutiveDashboard } from "../../pages/ExecutiveDashboard";
 import { Toast } from "../ui/Toast";
 import { analyzePrd, AnalysisResult, AnalyzePrdRequest } from "../../lib/api";
 import { AnalysisConfig } from "../../components/new-analysis/AnalysisOptions";
@@ -84,6 +85,8 @@ export function DashboardLayout() {
     switch (currentView) {
       case "dashboard":
         return <Dashboard setCurrentView={setCurrentView} />;
+      case "executive-dashboard":
+        return <ExecutiveDashboard setCurrentView={setCurrentView} />;
       case "integrations":
         return <Integrations />;
       case "new-analysis":

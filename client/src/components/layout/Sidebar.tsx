@@ -9,6 +9,7 @@ interface SidebarProps {
 export function Sidebar({ currentView, setCurrentView }: SidebarProps) {
   const navItems = [
     { id: "dashboard", label: "Dashboard", icon: Icons.dashboard },
+    { id: "executive-dashboard", label: "Executive Dashboard", icon: Icons.trendingUp },
     { id: "new-analysis", label: "New Analysis", icon: Icons.plus },
     { id: "history", label: "History", icon: Icons.history },
     { id: "integrations", label: "Integrations", icon: Icons.integration },

@@ -1,0 +1,236 @@
+# LaunchMind AI - MVP Development
+
+## Objective
+
+Build the Executive Dashboard for LaunchMind AI.
+
+The Executive Dashboard should become the primary decision-making screen for Product Managers.
+
+It must consume ONLY the Launch Intelligence created in Prompt 09.
+
+Do NOT call Gemini.
+
+Do NOT modify the Context Engine.
+
+Do NOT modify the Intelligence Engine.
+
+Do NOT redesign existing pages.
+
+Do NOT modify completed integrations.
+
+Build only the Executive Dashboard.
+
+---
+
+# Rules
+
+- Preserve the existing architecture.
+- Consume only LaunchIntelligence.
+- Do NOT read directly from Gemini.
+- Do NOT read directly from Supabase.
+- Do NOT modify Dashboard routing.
+- Do NOT modify History.
+- Do NOT modify Slack integration.
+- Do NOT modify Google Drive integration.
+- Do NOT install unnecessary packages.
+- Use reusable React + TypeScript components.
+- Optimize for minimum Replit AI credits.
+- Skip automated feature testing.
+
+---
+
+# Purpose
+
+Provide Product Managers with one centralized AI-powered Launch Decision dashboard.
+
+Everything displayed must originate from the Intelligence Engine.
+
+No business logic should exist inside UI components.
+
+---
+
+# Dashboard Layout
+
+Create an Executive Dashboard containing:
+
+Top Section
+
+- Launch Readiness Score
+- Decision Badge
+  - GO
+  - GO WITH RISKS
+  - NO-GO
+
+Middle Section
+
+- Timeline Health
+- Confidence Level
+- Overall Risk
+
+Insights Section
+
+- Executive Recommendation
+- Priority Actions
+- Critical Blockers
+- Next Steps
+
+Bottom Section
+
+- Recent Analysis Summary
+- Report Export Status
+- Slack Share Status
+
+Use responsive cards.
+
+Maintain the existing LaunchMind UI theme.
+
+---
+
+# Widgets
+
+Create reusable widgets.
+
+Suggested:
+
+- LaunchReadinessCard
+- DecisionBadge
+- TimelineHealthCard
+- RiskSummaryCard
+- ConfidenceCard
+- RecommendationCard
+- PriorityActionsCard
+- IntegrationStatusCard
+
+Each widget receives typed props only.
+
+No widget performs calculations.
+
+---
+
+# Dashboard Service
+
+Create one DashboardService.
+
+Responsibilities:
+
+- Receive LaunchIntelligence
+- Map values for display
+- Prepare widget data
+
+Do not duplicate Intelligence Engine logic.
+
+---
+
+# Empty State
+
+If no LaunchIntelligence exists:
+
+Display:
+
+"No launch analysis available."
+
+Button:
+
+Create New Analysis
+
+Navigate to the existing analysis page.
+
+---
+
+# Loading State
+
+Display skeleton loaders while dashboard data is loading.
+
+---
+
+# Error State
+
+Display friendly error message.
+
+Buttons:
+
+Retry
+
+Return to Dashboard
+
+Do not implement retry logic.
+
+---
+
+# Folder Structure
+
+Suggested:
+
+pages/
+
+ExecutiveDashboard.tsx
+
+components/dashboard/
+
+LaunchReadinessCard.tsx
+
+DecisionBadge.tsx
+
+TimelineHealthCard.tsx
+
+RiskSummaryCard.tsx
+
+ConfidenceCard.tsx
+
+RecommendationCard.tsx
+
+PriorityActionsCard.tsx
+
+IntegrationStatusCard.tsx
+
+services/
+
+DashboardService.ts
+
+Reuse existing folders whenever possible.
+
+---
+
+# Future Placeholders
+
+Leave TODO comments only.
+
+Future widgets:
+
+- GitHub Health
+- Calendar Timeline
+- Deployment Health
+- RAG Insights
+- Team Collaboration Metrics
+
+Do not implement them.
+
+---
+
+# Deliverables
+
+After implementation provide:
+
+1. Files created
+
+2. Files modified
+
+3. Dashboard components created
+
+4. DashboardService created
+
+5. Future widget placeholders
+
+Implement only this feature.
+
+Do not build Workspace.
+
+Do not build Multiple Launches.
+
+Do not build RAG.
+
+Stop after the Executive Dashboard is complete.
+
+Do not run automated end-to-end testing.
+
+Only ensure the project compiles successfully.
