@@ -57,7 +57,12 @@ function rowToDetail(row: AnalysisHistoryRow): HistoryDetail {
     viewData: {
       scoreCard: {
         score: row.readiness_score,
-        riskLevel: row.readiness_score >= 75 ? "Low" : row.readiness_score >= 50 ? "Medium" : "High",
+        riskLevel:
+          row.readiness_score >= 75
+            ? "Low"
+            : row.readiness_score >= 50
+              ? "Medium"
+              : "High",
       },
       executiveSummary: row.executive_summary,
       keyObservations: row.executive_summary
@@ -68,7 +73,9 @@ function rowToDetail(row: AnalysisHistoryRow): HistoryDetail {
       recommendation: {
         decision: row.recommendation as Decision,
         confidence: row.confidence_score,
-        explanation: row.recommendation_rationale ?? "No rationale was recorded for this analysis.",
+        explanation:
+          row.recommendation_rationale ??
+          "No rationale was recorded for this analysis.",
       },
       risks: row.risk_assessment ?? [],
       missingRequirements: row.missing_requirements ?? [],
@@ -85,8 +92,18 @@ export interface SaveAnalysisPayload {
   viewData: ResultsViewData;
 }
 
-export async function saveAnalysisToHistory(payload: SaveAnalysisPayload): Promise<void> {
+export async function saveAnalysisToHistory(
+  payload: SaveAnalysisPayload,
+): Promise<void> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User not authenticated.");
+  }
   const { error } = await supabase.from(TABLE).insert({
+    user_id: user.id,
     product_name: payload.productName,
     product_type: payload.productType,
     prd_text: payload.prdText,
@@ -107,11 +124,19 @@ export async function saveAnalysisToHistory(payload: SaveAnalysisPayload): Promi
 }
 
 export async function fetchAnalysisHistory(): Promise<HistorySummary[]> {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User not authenticated.");
+  }
   const { data, error } = await supabase
     .from(TABLE)
     .select(
-      "id, created_at, product_name, product_type, readiness_score, recommendation"
+      "id, created_at, product_name, product_type, readiness_score, recommendation",
     )
+    .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -122,7 +147,20 @@ export async function fetchAnalysisHistory(): Promise<HistorySummary[]> {
 }
 
 export async function fetchAnalysisById(id: string): Promise<HistoryDetail> {
-  const { data, error } = await supabase.from(TABLE).select("*").eq("id", id).single();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User not authenticated.");
+  }
+
+  const { data, error } = await supabase
+    .from(TABLE)
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .single();
 
   if (error || !data) {
     throw new Error(error?.message || "Analysis not found.");
