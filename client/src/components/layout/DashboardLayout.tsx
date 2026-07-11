@@ -18,14 +18,26 @@ import { saveAnalysisToHistory, fetchAnalysisById } from "../../lib/historyApi";
 export function DashboardLayout() {
   const [currentView, setCurrentView] = useState("dashboard");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
+    null,
+  );
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
-  const [selectedOptions, setSelectedOptions] = useState<AnalysisConfig | null>(null);
-  const [historyViewData, setHistoryViewData] = useState<ResultsViewData | null>(null);
-  const [historyMeta, setHistoryMeta] = useState<{ productName: string; createdAt: string } | null>(null);
-  const [analysisProductName, setAnalysisProductName] = useState<string | null>(null);
-  const [analysisProductType, setAnalysisProductType] = useState<string | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<AnalysisConfig | null>(
+    null,
+  );
+  const [historyViewData, setHistoryViewData] =
+    useState<ResultsViewData | null>(null);
+  const [historyMeta, setHistoryMeta] = useState<{
+    productName: string;
+    createdAt: string;
+  } | null>(null);
+  const [analysisProductName, setAnalysisProductName] = useState<string | null>(
+    null,
+  );
+  const [analysisProductType, setAnalysisProductType] = useState<string | null>(
+    null,
+  );
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const runAnalysis = async (payload: AnalyzePrdRequest) => {
@@ -44,6 +56,7 @@ export function DashboardLayout() {
       setAnalysisResult(result);
 
       const viewData = mapToResultsViewData(result, payload.options);
+      console.log("Before saveAnalysisToHistory");
       try {
         await saveAnalysisToHistory({
           productName: payload.productName,
@@ -51,12 +64,16 @@ export function DashboardLayout() {
           prdText: payload.prdText,
           viewData,
         });
+        console.log("After saveAnalysisToHistory");
         setToastMessage("Analysis saved to history");
       } catch (saveErr) {
-        console.error("Failed to save analysis to history:", saveErr);
+        console.error("SAVE FAILED", saveErr);
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to analyze PRD. Please try again.";
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Failed to analyze PRD. Please try again.";
       setAnalysisError(message);
     } finally {
       setIsAnalyzing(false);
@@ -74,9 +91,15 @@ export function DashboardLayout() {
     try {
       const detail = await fetchAnalysisById(id);
       setHistoryViewData(detail.viewData);
-      setHistoryMeta({ productName: detail.productName, createdAt: detail.createdAt });
+      setHistoryMeta({
+        productName: detail.productName,
+        createdAt: detail.createdAt,
+      });
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to load this analysis. Please try again.";
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Failed to load this analysis. Please try again.";
       setAnalysisError(message);
     } finally {
       setIsAnalyzing(false);
@@ -92,7 +115,12 @@ export function DashboardLayout() {
       case "integrations":
         return <Integrations />;
       case "new-analysis":
-        return <NewAnalysis setCurrentView={setCurrentView} onAnalyze={runAnalysis} />;
+        return (
+          <NewAnalysis
+            setCurrentView={setCurrentView}
+            onAnalyze={runAnalysis}
+          />
+        );
       case "results":
         return (
           <Results
@@ -109,11 +137,21 @@ export function DashboardLayout() {
           />
         );
       case "history":
-        return <HistoryPage setCurrentView={setCurrentView} onSelectAnalysis={openHistoryEntry} />;
+        return (
+          <HistoryPage
+            setCurrentView={setCurrentView}
+            onSelectAnalysis={openHistoryEntry}
+          />
+        );
       case "workspace":
         return <WorkspacePage setCurrentView={setCurrentView} />;
       case "settings":
-        return <PlaceholderPage title="Settings" description="Manage your LaunchMind AI preferences and workspace settings." />;
+        return (
+          <PlaceholderPage
+            title="Settings"
+            description="Manage your LaunchMind AI preferences and workspace settings."
+          />
+        );
       default:
         return <Dashboard setCurrentView={setCurrentView} />;
     }
@@ -128,17 +166,19 @@ export function DashboardLayout() {
         onClose={() => setIsMobileSidebarOpen(false)}
       />
       <div className="flex-1 flex flex-col min-w-0">
-        <TopBar currentView={currentView} onMenuClick={() => setIsMobileSidebarOpen(true)} />
+        <TopBar
+          currentView={currentView}
+          onMenuClick={() => setIsMobileSidebarOpen(true)}
+        />
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
-          <div className="max-w-6xl mx-auto">
-            {renderContent()}
-          </div>
+          <div className="max-w-6xl mx-auto">{renderContent()}</div>
         </main>
       </div>
-      {toastMessage && <Toast message={toastMessage} onDismiss={() => setToastMessage(null)} />}
+      {toastMessage && (
+        <Toast message={toastMessage} onDismiss={() => setToastMessage(null)} />
+      )}
     </div>
   );
 }
 
 // TODO: User Authentication — gate saved/viewed history to the signed-in user.
-
