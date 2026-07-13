@@ -23,7 +23,14 @@ export function LaunchReadinessCard({ score, level, decision }: LaunchReadinessC
   return (
     <section className="bg-card border border-border rounded-xl p-6 shadow-sm">
       <div className="flex items-start justify-between gap-3 flex-wrap mb-6">
-        <h3 className="text-sm font-medium text-muted-foreground">Launch Readiness Score</h3>
+        <div>
+          <h3 className="text-sm font-semibold text-foreground">
+            Launch Readiness Score
+          </h3>
+          <p className="text-xs text-muted-foreground mt-1">
+            AI-generated assessment based on risks, requirements, and launch signals.
+          </p>
+        </div>
         <div className="flex items-center gap-2 flex-wrap">
           {decision && <DecisionBadge decision={decision} />}
           <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${levelBadgeClasses[level]}`}>

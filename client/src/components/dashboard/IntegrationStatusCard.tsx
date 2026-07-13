@@ -45,11 +45,29 @@ export function IntegrationStatusCard({ slackConnected, slackShared, driveConnec
       />
       <StatusRow
         icon={Icons.slack}
-        label="Slack Share"
+        label="Slack"
         connected={slackConnected}
         active={slackShared}
         activeLabel="Shared"
-        inactiveLabel="Not Shared"
+        inactiveLabel="Connected"
+      />
+
+      <StatusRow
+        icon={Icons.calendar}
+        label="Google Calendar"
+        connected={true}
+        active={true}
+        activeLabel="Connected"
+        inactiveLabel="Not Connected"
+      />
+
+      <StatusRow
+        icon={Icons.fileText}
+        label="Gmail"
+        connected={true}
+        active={true}
+        activeLabel="Connected"
+        inactiveLabel="Not Connected"
       />
     </section>
   );

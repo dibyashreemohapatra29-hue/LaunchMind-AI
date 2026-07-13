@@ -29,7 +29,9 @@ export function WorkspaceCard({ workspace }: WorkspaceCardProps) {
       <div className="flex items-start justify-between gap-3 mb-5">
         <div>
           <h2 className="text-lg font-bold text-foreground">{workspace.name}</h2>
-          <p className="text-sm text-muted-foreground">Logical grouping of every launch analyzed so far</p>
+          <p className="text-sm text-muted-foreground">
+            Central workspace for tracking launch readiness, AI recommendations, integrations, and release progress.
+          </p>
         </div>
         <span className={`flex-shrink-0 px-3 py-1 rounded-full text-xs font-bold ${healthClasses[workspace.overallHealth]}`}>
           {workspace.overallHealth}

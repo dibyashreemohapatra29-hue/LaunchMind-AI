@@ -31,9 +31,16 @@ export function LaunchSwitcher({ launches, selectedLaunchId, onSelect }: LaunchS
 
   return (
     <div>
-      <label className="block text-xs font-medium text-muted-foreground mb-2" htmlFor="launch-switcher">
-        Viewing Launch
+      <label
+        className="block text-xs font-medium text-muted-foreground mb-2"
+        htmlFor="launch-switcher"
+      >
+        Active Launch Workspace
       </label>
+
+      <p className="text-xs text-muted-foreground mb-3">
+        Switch between previously analyzed product launches without re-running AI analysis.
+      </p>
       <select
         id="launch-switcher"
         value={selectedLaunchId ?? ""}

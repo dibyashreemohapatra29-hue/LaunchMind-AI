@@ -21,26 +21,51 @@ interface TimelinePanelProps {
 
 export function TimelinePanel({ events }: TimelinePanelProps) {
   if (events.length === 0) {
-    return <p className="text-sm text-muted-foreground py-8 text-center">No timeline events yet.</p>;
+    return (
+      <p className="text-sm text-muted-foreground py-8 text-center">
+        No timeline events yet.
+      </p>
+    );
   }
 
   return (
     <div className="relative pl-6">
-      <div className="absolute left-[7px] top-2 bottom-2 w-px bg-border" aria-hidden="true" />
+      <div
+        className="absolute left-[7px] top-2 bottom-2 w-px bg-border"
+        aria-hidden="true"
+      />
       <div className="space-y-5">
         {events.map((event) => (
           <div key={event.id} className="relative">
             <span
               className={`absolute -left-6 top-1 w-3.5 h-3.5 rounded-full border-2 border-background ${
-                event.status === "completed" ? "bg-emerald-500" : "bg-muted-foreground/40"
+                event.status === "completed"
+                  ? "bg-emerald-500"
+                  : "bg-muted-foreground/40"
               }`}
               aria-hidden="true"
             />
             <div className="flex items-center justify-between gap-3 mb-1">
-              <span className="text-sm font-semibold text-foreground">{event.label}</span>
-              <span className="text-xs text-muted-foreground flex-shrink-0">{formatTimestamp(event.timestamp)}</span>
+              <span className="text-sm font-semibold text-foreground">
+                {event.label}
+              </span>
+              <span className="text-xs text-muted-foreground flex-shrink-0">
+                {formatTimestamp(event.timestamp)}
+              </span>
             </div>
-            <p className="text-sm text-muted-foreground">{event.description}</p>
+            <div className="mt-1">
+              <p className="text-sm text-foreground">{event.description}</p>
+
+              <span
+                className={`inline-block mt-2 px-2 py-1 rounded-full text-[10px] font-medium ${
+                  event.status === "completed"
+                    ? "bg-emerald-500/10 text-emerald-600"
+                    : "bg-amber-500/10 text-amber-600"
+                }`}
+              >
+                {event.status === "completed" ? "Completed" : "Pending"}
+              </span>
+            </div>
           </div>
         ))}
       </div>

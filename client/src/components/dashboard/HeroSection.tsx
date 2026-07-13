@@ -7,7 +7,7 @@ interface HeroSectionProps {
 export function HeroSection({ onNewAnalysis }: HeroSectionProps) {
   return (
     <div className="relative overflow-hidden rounded-xl bg-card border border-border p-8 mb-8 shadow-sm">
-      <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="relative z-0 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="max-w-2xl">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 text-foreground">
             AI Product Operations Command Center
@@ -16,9 +16,9 @@ export function HeroSection({ onNewAnalysis }: HeroSectionProps) {
             Make evidence-based Go / No-Go launch decisions. Analyze PRDs for risk, readiness, and completeness.
           </p>
         </div>
-        <button 
+        <button
           onClick={onNewAnalysis}
-          className="shrink-0 inline-flex items-center justify-center gap-2 rounded-md bg-primary text-primary-foreground px-6 py-3 text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm"
+          className="relative z-0 shrink-0 inline-flex items-center justify-center gap-2 rounded-md bg-primary text-primary-foreground px-6 py-3 text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm"
         >
           <Icons.plus className="w-4 h-4" />
           New Analysis

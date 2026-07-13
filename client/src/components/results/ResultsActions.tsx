@@ -1,5 +1,8 @@
 import { Icons } from "../icons";
-import { GoogleDriveExportButton, DriveStatus } from "./GoogleDriveExportButton";
+import {
+  GoogleDriveExportButton,
+  DriveStatus,
+} from "./GoogleDriveExportButton";
 
 type SlackStatus = "idle" | "loading" | "success" | "error";
 
@@ -14,7 +17,10 @@ interface ResultsActionsProps {
   driveError?: string | null;
 }
 
-const slackButtonContent: Record<SlackStatus, { label: string; className: string }> = {
+const slackButtonContent: Record<
+  SlackStatus,
+  { label: string; className: string }
+> = {
   idle: {
     label: "Share to Slack",
     className:
@@ -22,15 +28,18 @@ const slackButtonContent: Record<SlackStatus, { label: string; className: string
   },
   loading: {
     label: "Sending...",
-    className: "border border-border text-muted-foreground bg-muted/50 cursor-not-allowed",
+    className:
+      "border border-border text-muted-foreground bg-muted/50 cursor-not-allowed",
   },
   success: {
     label: "Sent to Slack",
-    className: "border border-emerald-500/30 text-emerald-600 bg-emerald-500/10 cursor-default",
+    className:
+      "border border-emerald-500/30 text-emerald-600 bg-emerald-500/10 cursor-default",
   },
   error: {
     label: "Share to Slack",
-    className: "border border-destructive/30 text-destructive hover:bg-destructive/5 transition-colors",
+    className:
+      "border border-destructive/30 text-destructive hover:bg-destructive/5 transition-colors",
   },
 };
 
@@ -64,14 +73,36 @@ export function ResultsActions({
         )}
 
         {onShareToSlack && (
-          <button
-            onClick={slackDisabled || anyUploading ? undefined : onShareToSlack}
-            disabled={slackDisabled || anyUploading}
-            className={`inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-md text-sm font-medium ${slack.className}`}
-          >
-            <Icons.slack className="w-4 h-4" />
-            {slack.label}
-          </button>
+          <>
+            <button
+              onClick={
+                slackDisabled || anyUploading ? undefined : onShareToSlack
+              }
+              disabled={slackDisabled || anyUploading}
+              className={`inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-md text-sm font-medium ${slack.className}`}
+            >
+              <Icons.slack className="w-4 h-4" />
+              {slack.label}
+            </button>
+
+            <>
+              <button
+                disabled
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-md text-sm font-medium border border-border text-muted-foreground bg-muted/50 cursor-not-allowed"
+              >
+                <Icons.calendar className="w-4 h-4" />
+                Create Calendar Event
+              </button>
+
+              <button
+                disabled
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-md text-sm font-medium border border-border text-muted-foreground bg-muted/50 cursor-not-allowed"
+              >
+                <Icons.fileText className="w-4 h-4" />
+                Email Report
+              </button>
+            </>
+          </>
         )}
 
         <button
@@ -91,9 +122,11 @@ export function ResultsActions({
         </button>
 
         {/* Future integration placeholders — no functionality yet:
-            - TODO: Supabase Storage — persist generated report/artifacts
-            - TODO: Slack OAuth — post to any workspace, not just webhook
-            - TODO: Google Calendar Event Creation — schedule a launch review meeting */}
+        - TODO: Gmail API
+        - TODO: Google Calendar API
+        - TODO: GitHub Actions
+        - TODO: Team Workspace
+        - TODO: Supabase Storage */}
       </div>
     </div>
   );

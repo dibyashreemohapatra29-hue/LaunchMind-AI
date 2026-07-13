@@ -11,7 +11,14 @@ export function ConfidenceCard({ score, level }: ConfidenceViewModel) {
   return (
     <section className="bg-card border border-border rounded-xl p-5 shadow-sm flex flex-col">
       <div className="flex justify-between items-start mb-3">
-        <span className="text-sm font-medium text-muted-foreground">Confidence Level</span>
+        <div>
+          <h3 className="text-sm font-semibold text-foreground">
+            AI Confidence
+          </h3>
+          <p className="text-xs text-muted-foreground mt-1">
+            Measures confidence in the generated launch recommendation.
+          </p>
+        </div>
         <div className="p-2 rounded-md bg-muted text-muted-foreground">
           <Icons.checkCircle className="w-4 h-4" />
         </div>

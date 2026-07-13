@@ -26,9 +26,17 @@ function ListSection({ title, items, emptyText, tone }: { title: string; items: 
 export function PriorityActionsCard({ priorityActions, blockers, nextSteps }: PriorityActionsViewModel) {
   return (
     <section className="bg-card border border-border rounded-xl p-6 shadow-sm space-y-5">
-      <div className="flex items-center gap-2 mb-1">
-        <Icons.fileText className="w-4 h-4 text-muted-foreground" />
-        <h3 className="text-sm font-medium text-muted-foreground">Priority Actions</h3>
+      <div className="mb-3">
+        <div className="flex items-center gap-2">
+          <Icons.fileText className="w-4 h-4 text-muted-foreground" />
+          <h3 className="text-sm font-semibold text-foreground">
+            AI Action Center
+          </h3>
+        </div>
+
+        <p className="text-xs text-muted-foreground mt-2">
+          Recommended actions generated from the latest launch readiness analysis.
+        </p>
       </div>
 
       <ListSection title="Priority Actions" items={priorityActions} emptyText="No priority actions identified." tone="default" />

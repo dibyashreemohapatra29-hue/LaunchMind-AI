@@ -8,7 +8,10 @@ const badgeClasses: Record<DecisionViewModel["decision"], string> = {
 
 export function DecisionBadge({ decision }: DecisionViewModel) {
   return (
-    <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold border ${badgeClasses[decision]}`}>
+    <span
+      className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold border shadow-sm ${badgeClasses[decision]}`}
+    >
+      <span className="w-2 h-2 rounded-full bg-current opacity-80"></span>
       {decision}
     </span>
   );

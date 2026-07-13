@@ -10,13 +10,36 @@ export function RecentAnalysisSummaryCard({ productName, productType, createdAt,
         <Icons.fileText className="w-4 h-4 text-muted-foreground" />
         <h3 className="text-sm font-medium text-muted-foreground">Recent Analysis Summary</h3>
       </div>
-      <div className="space-y-1.5">
-        <p className="text-base font-semibold text-foreground">{productName ?? "Unknown Product"}</p>
-        {productType && <p className="text-xs text-muted-foreground">{productType}</p>}
-        <p className="text-xs text-muted-foreground">Analyzed: {formattedDate}</p>
-        <p className="text-xs text-muted-foreground">
-          {totalAnalyses} total analys{totalAnalyses === 1 ? "is" : "es"} in history
-        </p>
+      <div className="space-y-2">
+        <div>
+          <p className="text-base font-semibold text-foreground">
+            {productName ?? "Unknown Product"}
+          </p>
+
+          {productType && (
+            <p className="text-xs text-muted-foreground">
+              {productType}
+            </p>
+          )}
+        </div>
+
+        <div className="pt-2 border-t border-border">
+          <p className="text-xs text-muted-foreground">
+            Last Analysis
+          </p>
+          <p className="text-sm font-medium">
+            {formattedDate}
+          </p>
+        </div>
+
+        <div className="pt-2 border-t border-border">
+          <p className="text-xs text-muted-foreground">
+            Total Analyses
+          </p>
+          <p className="text-lg font-bold">
+            {totalAnalyses}
+          </p>
+        </div>
       </div>
     </section>
   );

@@ -89,8 +89,8 @@ export function Sidebar({
       >
         <div className="p-6 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="bg-primary/10 p-2 rounded-lg text-primary">
-              <Icons.logo className="w-6 h-6" />
+            <div className="bg-primary/10 p-2 rounded-lg text-primary shadow-sm">
+              <Icons.logo className="w-7 h-7" />
             </div>
             <span className="font-semibold text-lg tracking-tight">
               LaunchMind AI

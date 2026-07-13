@@ -70,9 +70,15 @@ export function Integrations() {
       name: "Google Calendar",
       desc: "Schedule launch reviews and milestones automatically.",
       icon: Icons.calendar,
-      status: "coming-soon",
+      status: "connected",
     },
-  ];
+    {
+      name: "Gmail",
+      desc: "Send AI analysis reports and launch summaries via email.",
+      icon: Icons.fileText,
+      status: "connected",
+    },
+  ];  
 
   return (
     <div className="animate-in fade-in duration-500 max-w-4xl mx-auto py-8">
@@ -105,8 +111,12 @@ export function Integrations() {
               </div>
               <div className="ml-4 flex-shrink-0">
                 <button
-                  disabled
-                  className="text-sm font-medium px-4 py-2 bg-muted text-muted-foreground rounded-md opacity-50 cursor-not-allowed"
+                  className={`text-sm font-medium px-4 py-2 rounded-md transition-colors ${
+                    item.status === "connected"
+                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                      : "bg-muted text-muted-foreground opacity-50 cursor-not-allowed"
+                  }`}
+                  disabled={item.status !== "connected"}
                 >
                   {item.status === "connected" ? "Manage" : "Connect"}
                 </button>
